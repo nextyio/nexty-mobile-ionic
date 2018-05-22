@@ -43,3 +43,4 @@ ionic link --pro-id 19777f0b
 - run "npm update" get web3 invalid (beta2 instead of beta30), reinstall web3 manually to resolve.
 - Back issue of barcode scanner on android: https://github.com/ionic-team/ng-cordova/issues/138 (use 2nd)
 # nexty-mobile-ionic
+# nexty-mobile-ionic
