@@ -1,12 +1,18 @@
 import { LoadingController } from 'ionic-angular';
 import { Injectable } from '@angular/core';
 import { ToastController } from 'ionic-angular';
+import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
+
 
 @Injectable()
 export class LoadingService {
   loading: any;
-
-  constructor(private loadingCtrl: LoadingController, private toastCtrl: ToastController) {
+  toastNet: any;
+  constructor(
+    private loadingCtrl: LoadingController,
+    private toastCtrl: ToastController,
+    private loadingBar: SlimLoadingBarService
+  ) {
   }
 
   show() {
@@ -32,5 +38,23 @@ export class LoadingService {
 
   hide() {
     this.loading.dismiss();
+  }
+  ToastNet() {
+    this.toastNet = this.toastCtrl.create({
+      message: 'Please connect internet',
+      cssClass: 'toastNetwork'
+    });
+    this.toastNet.present();
+  }
+  hideNet() {
+    this.toastNet.dismiss();
+  }
+  showLoading() {
+    this.loadingBar.start();
+    this.loadingBar.color = 'red';
+    // this.loadingBar.height = '10px';
+  }
+  hideloading() {
+    this.loadingBar.complete();
   }
 }

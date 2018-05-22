@@ -34,22 +34,20 @@
         </button>
       </ion-col>
     </ion-row>
-    <ion-item no-lines no-margin *ngIf="!loginForm.controls.address.valid && loginForm.controls.address.dirty"
-         class="validator-error">
+    <ion-item no-lines no-margin *ngIf="!loginForm.controls.address.valid && loginForm.controls.address.dirty" class="validator-error">
       <ion-label color="danger">
         Please enter a valid address.
       </ion-label>
     </ion-item>
 
     <ion-item padding-horizontal>
-      <ion-label floating>Password</ion-label>
+      <ion-label floating>Local Password</ion-label>
       <ion-input [formControl]="loginForm.controls['password']" type="password"></ion-input>
     </ion-item>
     <ion-item no-lines no-margin *ngIf="!loginForm.controls.password.valid &&
-        loginForm.controls.password.dirty"
-         class="validator-error">
+        loginForm.controls.password.dirty" class="validator-error">
       <ion-label color="danger">
-        Please enter a valid password.
+        Please enter a valid local password.
       </ion-label>
     </ion-item>
     <ion-item no-lines no-margin *ngIf="loginFail">

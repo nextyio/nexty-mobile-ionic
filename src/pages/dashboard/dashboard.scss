@@ -45,4 +45,12 @@ page-dashboard {
     height: 85%;
     padding: 0 23px;
   }
+  .toastNetwork{
+>div{
+  background-color: red !important;
+}
+  }
+  .toast-container{
+    background: red !important;
+  }
 }

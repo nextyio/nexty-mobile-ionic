@@ -1,6 +1,6 @@
-import {Observable} from "rxjs/Observable";
+import { Observable } from "rxjs/Observable";
 import "rxjs/add/operator/finally";
-import {LoadingService} from "../services/loading.service";
+import { LoadingService } from "../services/loading.service";
 
 export abstract class CommonService {
 
@@ -11,12 +11,12 @@ export abstract class CommonService {
 
   load(): void {
     console.log("load data");
-    this.cLoadingService.show();
+    this.cLoadingService.showLoading();
     this.getData().finally(() => {
-      this.cLoadingService.hide();
+      this.cLoadingService.hideloading();
     }).subscribe();
     setTimeout(() => {
-      this.cLoadingService.hide();
+      this.cLoadingService.hideloading();
     }, 5000);
   }
 }

@@ -1,10 +1,10 @@
-import {Component} from '@angular/core';
-import {NavController, NavParams} from 'ionic-angular';
-import {HistoryService} from "./history.service";
-import {TransactionDetailPage} from "../detail/detail";
-import {LoadingService} from "../../services/loading.service";
-import {AuthService} from "../../services/auth.service";
-import {HistoryModel} from "./history.model";
+import { Component } from '@angular/core';
+import { NavController, NavParams } from 'ionic-angular';
+import { HistoryService } from "./history.service";
+import { TransactionDetailPage } from "../detail/detail";
+import { LoadingService } from "../../services/loading.service";
+import { AuthService } from "../../services/auth.service";
+import { HistoryModel } from "./history.model";
 
 /**
  * Generated class for the HistoryPage page.
@@ -25,15 +25,15 @@ export class HistoryPage {
   index: number;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-              private loadingService: LoadingService,
-              private authService: AuthService,
-              private service: HistoryService) {
+    private loadingService: LoadingService,
+    private authService: AuthService,
+    private service: HistoryService) {
   }
 
   ionViewDidLoad() {
-    this.loadingService.show();
+    this.loadingService.showLoading();
     this.service.getData().finally(() => {
-      this.loadingService.hide();
+      this.loadingService.hideloading();
     }).subscribe(() => {
       this.transactions = this.getFullTransaction();
       this.index = this.transactions.length;
@@ -76,12 +76,12 @@ export class HistoryPage {
   }
 
   goDetail(transaction: Transaction) {
-    this.navCtrl.push(TransactionDetailPage, {data: transaction.data});
+    this.navCtrl.push(TransactionDetailPage, { data: transaction.data });
   }
 
-  doInfinite(infiniteScroll){
-    this.service.getData(this.index, length).finally(()=> {
-    }).subscribe(()=>{
+  doInfinite(infiniteScroll) {
+    this.service.getData(this.index, length).finally(() => {
+    }).subscribe(() => {
       this.transactions = this.getFullTransaction();
       this.index = this.transactions.length;
       infiniteScroll.complete();

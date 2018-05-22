@@ -106,12 +106,12 @@ export class SendPage {
     }
     let alert = this.alertCtrl.create({
       title: 'Confirm send',
-      message: 'Enter your password to process',
+      message: 'Enter your local password to process',
       inputs: [
         {
           name: 'password',
           type: 'password',
-          placeholder: 'Password'
+          placeholder: 'Local Password'
         },
       ],
       buttons: [
@@ -133,10 +133,10 @@ export class SendPage {
   }
 
   doSend(nty, password: string) {
-    this.loadingService.show();
+    this.loadingService.showLoading();
     this.walletService.send(this.toAddress, nty, password).subscribe(
       transactionHash => {
-        this.loadingService.hide();
+        this.loadingService.hideloading();
 
         // trigger update balance
         this.walletService.updateBalance();

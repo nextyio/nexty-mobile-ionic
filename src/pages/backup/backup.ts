@@ -55,12 +55,12 @@ export class BackupPage {
   backup() {
     let alert = this.alertCtrl.create({
       title: 'Confirm backup',
-      message: 'Enter your password to process',
+      message: 'Enter your local password to process',
       inputs: [
         {
           name: 'password',
           type: 'password',
-          placeholder: 'Password',
+          placeholder: 'local Password',
         },
       ],
       buttons: [
@@ -82,9 +82,9 @@ export class BackupPage {
   }
 
   doBackup(password: string) {
-    this.loadingService.show();
+    this.loadingService.showLoading();
     this.service.backup(password).subscribe((errMsg) => {
-      this.loadingService.hide();
+      this.loadingService.hideloading();
       if (errMsg) {
         let alert = this.alertCtrl.create({
           title: 'Backup failed',

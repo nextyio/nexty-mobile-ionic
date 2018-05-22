@@ -6,7 +6,7 @@
     </button>
     <ion-title>Send</ion-title>
   </ion-navbar>
-
+  <ng2-slim-loading-bar></ng2-slim-loading-bar>
 </ion-header>
 
 
@@ -26,8 +26,7 @@
         </button>
       </ion-col>
     </ion-row>
-    <ion-item no-lines no-margin *ngIf="!isValidAddress() && getFocusAddress"
-              class="validator-error">
+    <ion-item no-lines no-margin *ngIf="!isValidAddress() && getFocusAddress" class="validator-error">
       <ion-label color="danger">
         Invalid address.
       </ion-label>
@@ -51,8 +50,7 @@
         </ion-item>
       </ion-col>
     </ion-row>
-    <ion-item no-lines no-margin *ngIf="!isValidPNTY() && getFocusPNTY"
-              class="validator-error">
+    <ion-item no-lines no-margin *ngIf="!isValidPNTY() && getFocusPNTY" class="validator-error">
       <ion-label color="danger">
         Please enter a valid amount.
       </ion-label>

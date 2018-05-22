@@ -43,8 +43,8 @@ import { File } from '@ionic-native/file';
 import { IOSFilePicker } from '@ionic-native/file-picker';
 import { FileChooser } from '@ionic-native/file-chooser';
 import { FilePath } from '@ionic-native/file-path';
-
-
+import { Network } from '@ionic-native/network';
+import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
 
 @NgModule({
   declarations: [
@@ -74,6 +74,7 @@ import { FilePath } from '@ionic-native/file-path';
     ChartsModule,
     NgxQRCodeModule,
     SuperTabsModule.forRoot(),
+    SlimLoadingBarModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -120,7 +121,8 @@ import { FilePath } from '@ionic-native/file-path';
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     IOSFilePicker,
     FileChooser,
-    FilePath
+    FilePath,
+    Network
   ]
 })
 export class AppModule {

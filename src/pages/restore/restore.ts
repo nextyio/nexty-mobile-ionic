@@ -75,9 +75,9 @@ export class RestorePage {
       this.code = this.restoreForm.controls['code'].value;
       this.password = this.restoreForm.controls['password'].value;
 
-      this.loadingService.show();
+      this.loadingService.showLoading();
       this.service.restore(this.code, this.password).subscribe((rCode) => {
-        this.loadingService.hide();
+        this.loadingService.hideloading();
         if (rCode == 0) {
           this.menuCtrl.enable(true, 'main-menu');
           this.navCtrl.setRoot(HomePage);

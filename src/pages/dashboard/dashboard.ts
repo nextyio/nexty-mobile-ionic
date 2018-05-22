@@ -1,5 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, ToastController, Platform } from 'ionic-angular';
 import { DashboardService } from "./dashboard.service";
 import { HistoryPage } from "../history/history";
 import { RateService } from "../../services/rate.service";
@@ -8,6 +8,8 @@ import { Constants } from "../../helper/constants";
 import { Utils } from "../../helper/utils";
 import { DataService } from '../../services/data.service';
 import { BackupPage } from '../backup/backup';
+import { Network } from '@ionic-native/network';
+import { LoadingService } from '../../services/loading.service';
 
 /**
  * Generated class for the DashboardPage page.
@@ -24,13 +26,19 @@ export class DashboardPage implements OnDestroy {
 
   lineChartData: Array<any> = [{}];
   public checkBackup: boolean;
+  public toastNet;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     private rateService: RateService,
     private walletService: WalletService,
     private service: DashboardService,
-    private dataservice: DataService
+    private dataservice: DataService,
+    private toastCtrl: ToastController,
+    private network: Network,
+    private platform: Platform,
+    private loadingservice: LoadingService
+
   ) {
     this.rateService.rateHistoryUpdated.subscribe(() => this.updateGraph());
 
@@ -42,6 +50,20 @@ export class DashboardPage implements OnDestroy {
     this.rateService.startRateHistoryRecurring();
     this.rateService.startRateRecurring();
     this.walletService.startBalanceRecurring();
+  }
+  ngAfterViewInit() {
+    this.platform.ready().then(() => {
+      this.network.onDisconnect().subscribe(disconnect => {
+        this.loadingservice.ToastNet();
+        console.log('disconnect network');
+      })
+      this.network.onConnect().subscribe(connect => {
+        this.loadingservice.hideNet();
+        console.log('connect network');
+        this.ionViewDidLoad();
+        this.balance;
+      })
+    })
   }
   ionViewDidEnter() {
     this.dataservice.getBackup().subscribe(data => {
@@ -55,6 +77,7 @@ export class DashboardPage implements OnDestroy {
         this.checkBackup = false;
       }
     })
+
   }
   goBackup() {
     this.navCtrl.push(BackupPage);
@@ -77,7 +100,6 @@ export class DashboardPage implements OnDestroy {
   get balance(): number {
     return Math.round(this.walletService.balance / Constants.BASE_NTY);
   }
-
   updateGraph() {
     let data = [];
     for (let entry of this.rateService.rateHistory) {

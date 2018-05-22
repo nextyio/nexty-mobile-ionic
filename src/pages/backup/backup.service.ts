@@ -36,7 +36,7 @@ export class BackupService {
   backup(password: string): Observable<any> {
 
     if (!this.authService.validatePassword(password)) {
-      return Observable.of('Invalid password');
+      return Observable.of('Invalid local password');
     }
 
     this.code = Utils.generateRandom(32);
