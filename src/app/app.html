@@ -1,0 +1,43 @@
+<ion-menu side="left" [content]="content">
+
+  <ion-content>
+    <div class="menu-content">
+      <ion-list color="primary">
+        <button ion-item menuClose tappable (click)="goHome()" no-lines [class.active]="activePage==1">
+          <ion-avatar item-left>
+            <img src="assets/imgs/logo-without-text.png">
+          </ion-avatar>
+          <span>Nexty Coin</span>
+        </button>
+        <button ion-item menuClose tappable (click)="goSetting()" no-lines [class.active]="activePage==2">
+          <ion-avatar item-left>
+            <ion-icon padding-horizontal name="settings"></ion-icon>
+          </ion-avatar>
+          <span>Settings</span>
+        </button>
+        <button ion-item menuClose tappable (click)="goAbout()" no-lines [class.active]="activePage==3">
+          <ion-avatar item-left>
+            <ion-icon padding-horizontal name="information-circle"></ion-icon>
+          </ion-avatar>
+          <span>About</span>
+        </button>
+        <button ion-item menuClose tappable (click)="showConfirmLogout()" no-lines>
+          <ion-avatar item-left>
+            <ion-icon padding-horizontal name="log-out"></ion-icon>
+          </ion-avatar>
+          <span>Logout</span>
+        </button>
+        <!-- <button ion-item menuClose tappable (click)="clearCache()" no-lines>
+          <ion-avatar item-left>
+            <ion-icon padding-horizontal name="log-out"></ion-icon>
+          </ion-avatar>
+          <span>clear Cache Back up</span>
+        </button> -->
+      </ion-list>
+    </div>
+  </ion-content>
+
+</ion-menu>
+
+<!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->
+<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>

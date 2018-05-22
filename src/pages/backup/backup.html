@@ -1,0 +1,48 @@
+<!--
+  Generated template for the AboutPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Backup</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content no-bounce padding>
+  <div class="backup">
+    <ion-list no-lines *ngIf="!backedUp()">
+      <ion-item>
+        <p>Click below button to backup wallet</p>
+      </ion-item>
+      <ion-item no-lines text-center>
+        <button class="normal-button" ion-button color="secondary" (click)="backup()">Backup</button>
+      </ion-item>
+    </ion-list>
+    <ion-list no-lines *ngIf="backedUp()">
+      <ion-item>
+        <p>Backup wallet code</p>
+      </ion-item>
+      <ion-item text-center>
+        <ion-label>{{ code }}</ion-label>
+      </ion-item>
+      <ion-item no-lines text-center>
+        <button class="normal-button" ion-button color="secondary" *ngIf="!copied" (click)="copy()">Copy code</button>
+        <button class="normal-button" ion-button color="secondary" *ngIf="copied">Copied</button>
+      </ion-item>
+      <ion-item no-lines text-center>
+        <button class="normal-button" ion-button (click)="shareFile()">Save or share file backup..</button>
+      </ion-item>
+      <!-- <ion-item no-lines text-center>
+        <button class="normal-button" ion-button (click)="findFile()">Open File</button>
+      </ion-item> -->
+    </ion-list>
+  </div>
+</ion-content>

@@ -1,0 +1,65 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Send</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content no-bounce padding>
+
+  <ion-list>
+    <ion-row align-items-end>
+      <ion-col>
+        <ion-item no-padding>
+          <ion-label floating>To</ion-label>
+          <ion-input type="text" (ionFocus)="focusAddress()" [(ngModel)]="toAddress"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col col-auto>
+        <button class="scan-button" ion-button icon-only (click)="scanAddress()">
+          <ion-icon name="qr-scanner"></ion-icon>
+        </button>
+      </ion-col>
+    </ion-row>
+    <ion-item no-lines no-margin *ngIf="!isValidAddress() && getFocusAddress"
+              class="validator-error">
+      <ion-label color="danger">
+        Invalid address.
+      </ion-label>
+    </ion-item>
+
+    <!--Conversation-->
+    <ion-row align-items-end>
+      <ion-col>
+        <ion-item no-padding>
+          <ion-label floating>NTY</ion-label>
+          <ion-input type="number" (ionFocus)="focusPNTY()" [(ngModel)]="nty"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col col-auto>
+        <ion-icon name="swap"></ion-icon>
+      </ion-col>
+      <ion-col>
+        <ion-item no-padding>
+          <ion-label floating>USD</ion-label>
+          <ion-input type="number" [(ngModel)]="usd"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-item no-lines no-margin *ngIf="!isValidPNTY() && getFocusPNTY"
+              class="validator-error">
+      <ion-label color="danger">
+        Please enter a valid amount.
+      </ion-label>
+    </ion-item>
+
+    <ion-item no-lines text-center>
+      <button class="normal-button" ion-button color="secondary" [disabled]="ntyValue == 0 || toAddress == ''" (click)="send()">Send</button>
+    </ion-item>
+  </ion-list>
+</ion-content>

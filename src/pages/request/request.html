@@ -1,0 +1,26 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Request</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content no-bounce padding>
+  <p>Tap the below image to copy this wallet address or share it with other via email or text</p>
+  <div padding-horizontal text-center class="qr-code" tappable (click)="onClickAddress()">
+    <ngx-qrcode [qrc-value]="address" [qrc-element-type]="'img'" qrc-class="address-code"></ngx-qrcode>
+  </div>
+
+  <div class="wrapper" text-center>
+    <ion-label id="copyTarget" no-margin>{{address}}</ion-label>
+  </div>
+
+  <div class="wrapper">
+    <button class="normal-button" ion-button color="secondary" (click)="share()">Share</button>
+  </div>
+</ion-content>

@@ -1,0 +1,63 @@
+<!--
+  Generated template for the AboutPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Transaction Detail</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content (swipe)="swipeEvent($event)">
+  <ion-grid>
+    <ion-row>
+      <ion-item>
+        <h3>Txhash</h3>
+        <p>{{ tx }}</p>
+      </ion-item>
+    </ion-row>
+    <ion-row>
+      <ion-item *ngIf="down">
+        <h3>From</h3>
+        <p>{{ from }}</p>
+      </ion-item>
+      <ion-item *ngIf="!down">
+        <h3>To</h3>
+        <p>{{ to }}</p>
+      </ion-item>
+    </ion-row>
+    <ion-row>
+      <ion-item>
+        <h3>Amount (NTY)</h3>
+        <p>{{ quantity | number}}</p>
+      </ion-item>
+    </ion-row>
+    <ion-row>
+      <ion-item>
+        <h3>Date</h3>
+        <p>{{ datetime }}</p>
+      </ion-item>
+    </ion-row>
+    <ion-row>
+      <ion-item>
+        <h3>Status</h3>
+        <p ion-text color="positive" *ngIf="confirmed">COMPLETE</p>
+        <p ion-text color="danger" *ngIf="!confirmed">PENDING</p>
+      </ion-item>
+    </ion-row>
+    <ion-row>
+      <ion-item no-lines text-center>
+        <button ion-button class="normal-button" color="primary" (click)="goExplorer()">Explorer</button>
+      </ion-item>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

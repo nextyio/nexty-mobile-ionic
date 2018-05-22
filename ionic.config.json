@@ -1,0 +1,8 @@
+{
+  "name": "Nexty Wallet",
+  "app_id": "19777f0b",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
+}

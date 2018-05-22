@@ -1,0 +1,91 @@
+// http://ionicframework.com/docs/theming/
+
+// App Global Sass
+// --------------------------------------------------
+// Put style rules here that you want to apply globally. These
+// styles are for the entire app and not just one component.
+// Additionally, this file can be also used as an entry point
+// to import other Sass files to be included in the output CSS.
+//
+// Shared Sass variables, which can be used to adjust Ionic's
+// default Sass variables, belong in "theme/variables.scss".
+//
+// To declare rules for a specific mode, create a child rule
+// for the .md, .ios, or .wp mode classes. The mode class is
+// automatically applied to the <body> element in the app.
+
+ion-menu {
+
+  ion-content.content {
+    background-color: map-get($colors, 'primary');
+
+    .menu-content {
+
+      button.item {
+        color: #FFF;
+        background-color: transparent;
+
+        &.active {
+          background-color: map-get($colors, 'tertiary');
+        }
+
+        ion-avatar {
+          margin: 8px 20px 8px 8px;
+          text-align: center;
+          min-width: 32px;
+          min-height: 32px;
+
+          img {
+            width: 2em;
+            height: 2em;
+          }
+
+          ion-icon {
+            font-size: 2em;
+            padding: 0;
+          }
+        }
+      }
+    }
+  }
+}
+
+.logo {
+  .logo-img {
+    text-align: center;
+
+    img {
+      max-width: 250px;
+    }
+  }
+
+  .logo-text {
+    text-align: center;
+    font-size: 24px;
+    font-family: Poppins;
+    color: #0d47a1;
+  }
+}
+
+.wrapper {
+  text-align: center;
+}
+
+.normal-button {
+  text-align: center;
+  font-family: Poppins;
+  margin: 10px 16px;
+  border-radius: 0;
+  height: 40px !important;
+  width: 260px !important;
+}
+
+.scan-button {
+  border-radius: 0;
+}
+
+@font-face {
+  font-family: Poppins;
+  src: url("../assets/fonts/Poppins-Regular.ttf");
+}
+

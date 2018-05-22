@@ -1,0 +1,48 @@
+page-dashboard {
+  .scroll-content {
+    background-color: #F5FCFF;
+  }
+  .coin {
+    height: 16%;
+    background-color: #f8b62d;
+  }
+  .text-coin {
+    padding-top: 16px;
+    font-family: Poppins;
+    font-size: 40px;
+    text-align: center;
+    color: white;
+  }
+  .exchangeRate {
+    margin: 10px;
+  }
+  .text-exchange {
+    font-family: Poppins;
+    font-size: 18px;
+    margin-bottom: 8px;
+    text-align: center;
+    i {
+      font-size: 16px;
+    }
+  }
+  #chart {
+    display: block;
+  }
+  .checkBackUp {
+    height: 10%;
+    background: red;
+    color: white;
+    font-size: 120%;
+    padding: 0 2%;
+  }
+  .ttl-backup {
+    float: left;
+    padding-top: 16px;
+  }
+  button.btn-backup {
+    float: right;
+    color: white;
+    height: 85%;
+    padding: 0 23px;
+  }
+}

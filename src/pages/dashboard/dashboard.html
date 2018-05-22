@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle icon-only>
+      <ion-icon name='menu'></ion-icon>
+    </button>
+    <ion-title>Dashboard</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content no-bounce>
+  <div class="checkBackUp" *ngIf="checkBackup">
+    <div class="ttl-backup">Wallet has not yet back up!</div>
+    <button class="btn-backup" ion-button (click)="goBackup()">BACK UP</button>
+  </div>
+  <div class="coin">
+    <div class="text-coin">
+      {{balance | number}} NTY
+    </div>
+  </div>
+  <div class="wrapper">
+    <button class="normal-button" ion-button color="primary" (click)="goHistory()">History</button>
+  </div>
+  <div class="exchangeRate">
+    <div class="text-exchange">
+      1 NTY =
+      <b>{{lastRatePrefix}}</b>
+      <i>{{lastRateSuffix}}</i> USD
+    </div>
+  </div>
+
+  <div id="chart">
+    <!--Begin remove if use Highchart-->
+    <div class="wrapper">
+      <h5>
+        Nexty Exchange Rate
+      </h5>
+      <div>(Will be updated when NTY is listed on Exchanges)</div>
+    </div>
+    <canvas baseChart width="300" height="200" [datasets]="lineChartData" [options]="lineChartOptions" [colors]="lineChartColors"
+      [legend]="false" [chartType]="'line'">
+    </canvas>
+    <!--End remove if use Highchart-->
+  </div>
+</ion-content>

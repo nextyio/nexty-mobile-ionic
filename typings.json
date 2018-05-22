@@ -1,0 +1,5 @@
+{
+  "ambientDependencies": {
+    "cordova": "registry:dt/cordova#0.0.0+20160819210047"
+  }
+}

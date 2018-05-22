@@ -1,0 +1,29 @@
+<!--
+  Generated template for the HistoryPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>History</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content (swipe)="swipeEvent($event)">
+  <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
+  <ion-list>
+    <ion-item *ngFor="let transaction of transactions" tappable (click)="goDetail(transaction)">
+      <ion-icon item-start name="arrow-round-{{transaction.type}}" [color]="transaction.type == 'up' ? 'danger' : 'positive'"></ion-icon>
+      <h3>{{ transaction.amount }}</h3>
+      <h4>{{ transaction.datetime }}</h4>
+      <ion-icon item-end name="ios-arrow-forward"></ion-icon>
+    </ion-item>
+  </ion-list>
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

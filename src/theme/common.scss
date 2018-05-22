@@ -1,0 +1,6 @@
+// fix weird top left 1px gray issue
+ion-content.content.content-md {
+  > .scroll-content {
+    overflow-y: auto;
+  }
+}
