@@ -53,7 +53,7 @@
     "cordova-plugin-filepath": "^1.3.0",
     "cordova-plugin-filepicker": "^1.1.5",
     "cordova-plugin-inappbrowser": "^2.0.2",
-    "cordova-plugin-ionic-keyboard": "^2.0.5",
+    "cordova-plugin-ionic-keyboard": "^2.1.0",
     "cordova-plugin-ionic-webview": "^1.2.1",
     "cordova-plugin-network-information": "^2.0.1",
     "cordova-plugin-screen-orientation": "^3.0.1",
@@ -103,7 +103,13 @@
       "cordova-clipboard": {},
       "cordova-plugin-splashscreen": {},
       "cordova-custom-config": {},
-      "cordova-plugin-crosswalk-webview": {},
+      "cordova-plugin-crosswalk-webview": {
+        "XWALK_VERSION": "23+",
+        "XWALK_LITEVERSION": "xwalk_core_library_canary:17+",
+        "XWALK_COMMANDLINE": "--disable-pull-to-refresh-effect",
+        "XWALK_MODE": "embedded",
+        "XWALK_MULTIPLEAPK": "true"
+      },
       "cordova-android-support-gradle-release": {
         "ANDROID_SUPPORT_VERSION": "27.0.0"
       },

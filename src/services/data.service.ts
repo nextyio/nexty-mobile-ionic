@@ -4,8 +4,7 @@ import { Observable } from "rxjs/Observable";
 import "rxjs/add/observable/fromPromise";
 import "rxjs/add/observable/forkJoin";
 import { File } from '@ionic-native/file';
-import { DateTime } from "ionic-angular";
-declare var cordova: any;
+
 @Injectable()
 export class DataService {
   constructor(private storage: Storage, private file: File) {

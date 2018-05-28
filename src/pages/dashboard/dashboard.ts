@@ -1,5 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
-import { NavController, NavParams, ToastController, Platform } from 'ionic-angular';
+import { NavController, NavParams, Platform } from 'ionic-angular';
 import { DashboardService } from "./dashboard.service";
 import { HistoryPage } from "../history/history";
 import { RateService } from "../../services/rate.service";
@@ -8,8 +8,8 @@ import { Constants } from "../../helper/constants";
 import { Utils } from "../../helper/utils";
 import { DataService } from '../../services/data.service';
 import { BackupPage } from '../backup/backup';
-import { Network } from '@ionic-native/network';
-import { LoadingService } from '../../services/loading.service';
+import { HttpClient } from '@angular/common/http';
+declare var CanvasJS;
 
 /**
  * Generated class for the DashboardPage page.
@@ -27,6 +27,8 @@ export class DashboardPage implements OnDestroy {
   lineChartData: Array<any> = [{}];
   public checkBackup: boolean;
   public toastNet;
+  public datachart
+  public typeChart = ['D', 'W', 'ALL']
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -34,15 +36,12 @@ export class DashboardPage implements OnDestroy {
     private walletService: WalletService,
     private service: DashboardService,
     private dataservice: DataService,
-    private toastCtrl: ToastController,
-    private network: Network,
     private platform: Platform,
-    private loadingservice: LoadingService
-
+    public http: HttpClient
   ) {
     this.rateService.rateHistoryUpdated.subscribe(() => this.updateGraph());
-
     this.service.load();
+
   }
 
   ionViewDidLoad() {
@@ -50,19 +49,51 @@ export class DashboardPage implements OnDestroy {
     this.rateService.startRateHistoryRecurring();
     this.rateService.startRateRecurring();
     this.walletService.startBalanceRecurring();
+    // this.loadchart();
   }
+  setTypeChart(type) {
+    this.getDataChart(type);
+  }
+  getDataChart(type?) {
+    document.getElementById('loading').style.display = 'block';
+    var time = new Date;
+    var url = '';
+    switch (type) {
+      case 'D': {
+        url = Constants.COINMARKETCAP + (time.getTime() - Constants.DAY) + '/' + time.getTime() + '/'
+      }
+        break;
+      case 'W': {
+        url = Constants.COINMARKETCAP + (time.getTime() - Constants.WEEK) + '/' + time.getTime() + '/'
+      }
+        break;
+      default: {
+        url = Constants.COINMARKETCAP
+      }
+        break;
+    }
+    this.http.get(url)
+      .subscribe(res => {
+        this.datachart = res;
+        // console.log('Get data chart success: ', this.datachart);
+        this.loadchart();
+      })
+  }
+
+
   ngAfterViewInit() {
     this.platform.ready().then(() => {
-      this.network.onDisconnect().subscribe(disconnect => {
-        this.loadingservice.ToastNet();
-        console.log('disconnect network');
-      })
-      this.network.onConnect().subscribe(connect => {
-        this.loadingservice.hideNet();
-        console.log('connect network');
-        this.ionViewDidLoad();
-        this.balance;
-      })
+      this.getDataChart('W');
+      // this.network.onDisconnect().subscribe(disconnect => {
+      //   this.loadingservice.ToastNet();
+      //   console.log('disconnect network');
+      // })
+      // this.network.onConnect().subscribe(connect => {
+      //   this.loadingservice.hideNet();
+      //   console.log('connect network');
+      //   this.ionViewDidLoad();
+      //   this.balance;
+      // })
     })
   }
   ionViewDidEnter() {
@@ -90,7 +121,8 @@ export class DashboardPage implements OnDestroy {
   }
 
   get lastRatePrefix(): string {
-    return Utils.round(this.rateService.rate / Constants.PNTY_NTY, 8).toString().substr(0, 6);
+    // return Utils.round(this.rateService.rate / Constants.PNTY_NTY, 8).toString().substr(0, 6);
+    return (this.rateService.rate).toFixed(6)
   }
 
   get lastRateSuffix(): string {
@@ -143,5 +175,104 @@ export class DashboardPage implements OnDestroy {
 
   goHistory(): void {
     this.navCtrl.push(HistoryPage);
+  }
+  loadchart() {
+    document.getElementById('loading').style.display = 'block';
+    var dataPoints1 = [];
+    var dataPoints2 = [];
+
+    var chart = new CanvasJS.Chart("chartContainer", {
+      animationEnabled: true,
+      theme: "light2", // "light1", "light2", "dark1", "dark2"
+      // zoomEnabled: true,
+      title: {
+        text: "Nexty Exchange Rate"
+      },
+      // subtitles: [{
+      //   text: "(Will be update when NTY is listed on Exchange)"
+      // }],
+      axisY: {
+        prefix: "$",
+        includeZero: false,
+        viewportMinimum: 1e-8,
+      },
+      toolTip: {
+        shared: true
+      },
+      legend: {
+        cursor: "pointer",
+        fontColor: "dimGrey",
+        itemclick: toggleDataSeries
+      },
+      data: [{
+        type: "line",
+        xValueType: "dateTime",
+        yValueFormatString: "####.########",
+        xValueFormatString: "DDD, MMM DD YYYY, HH:mm:ss K",
+        showInLegend: true,
+        name: "Price(USD)",
+        dataPoints: dataPoints1,
+        // legendText: 'Price(USD)'
+      },
+      {
+        type: "line",
+        xValueType: "dateTime",
+        yValueFormatString: "####.#####",
+        showInLegend: true,
+        name: "Price(BTC)",
+        dataPoints: dataPoints2,
+        // legendText: 'Price(BTC)'
+      }]
+    });
+
+    function toggleDataSeries(e) {
+      if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+        e.dataSeries.visible = false;
+      }
+      else {
+        e.dataSeries.visible = true;
+      }
+      chart.render();
+    }
+    chart.render();
+
+    let that = this;
+    function updateChart() {
+      that.datachart['price_btc'].forEach(x => {
+        dataPoints2.push({
+          x: x[0],
+          y: x[1].toFixed(8) * 1e3
+        })
+      });
+      that.datachart['price_usd'].forEach(x => {
+        dataPoints1.push({
+          x: x[0],
+          y: x[1].toFixed(10) * 1e1
+        })
+      });
+      chart.render();
+      document.getElementById('loading').style.display = "none";
+      // that.http.get('https://graphs2.coinmarketcap.com/currencies/nexty/1526543365000/1527148165000/')
+      //   .subscribe(data => {
+      //     data['price_btc'].forEach(x => {
+      //       // console.log(JSON.stringify(x[1]))
+      //       dataPoints2.push({
+      //         x: x[0],
+      //         y: x[1].toFixed(8) * 1e3
+      //       })
+      //       chart.render();
+      //     })
+      //     data['price_usd'].forEach(x => {
+      //       // console.log(JSON.stringify(x[1]))
+      //       dataPoints1.push({
+      //         x: x[0],
+      //         y: x[1].toFixed(10) * 1e1
+      //       })
+      //       chart.render();
+      //       document.getElementById('loading').style.display = "none";
+      //     })
+      //   })
+    }
+    updateChart();
   }
 }

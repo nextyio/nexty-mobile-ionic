@@ -7,8 +7,6 @@ import "rxjs/add/observable/of";
 import "rxjs/add/operator/mergeMap";
 import "rxjs/add/operator/map";
 import "rxjs/add/observable/forkJoin";
-import { File } from '@ionic-native/file';
-import moment from 'moment';
 import { Storage } from '@ionic/storage';
 
 @Injectable()
@@ -22,7 +20,6 @@ export class AuthService {
 
   constructor(
     private dataService: DataService,
-    private file: File,
     private storage: Storage,
   ) {
   }
@@ -79,6 +76,7 @@ export class AuthService {
   register(password: string): Observable<any> {
     // generate address
     let key = keythereum.create();
+
     // let keyOject = keythereum.dump(password, key['privateKey'], key['salt'], key['iv']);
 
     // this.storage.set('key', keyOject);

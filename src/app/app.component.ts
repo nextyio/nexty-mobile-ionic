@@ -8,9 +8,9 @@ import { UnloginPage } from "../pages/unlogin/unlogin";
 import { SettingPage } from "../pages/setting/setting";
 import { AboutPage } from "../pages/about/about";
 import { AuthService } from "../services/auth.service";
-import { BackupService } from '../pages/backup/backup.service';
-import { BackupPage } from '../pages/backup/backup';
 import { DataService } from '../services/data.service';
+import { LoadingService } from '../services/loading.service';
+import { Network } from '@ionic-native/network';
 
 @Component({
   templateUrl: 'app.html'
@@ -29,8 +29,9 @@ export class MyApp {
     public splashScreen: SplashScreen,
     public alertCtrl: AlertController,
     private authService: AuthService,
-    private service: BackupService,
-    private dataservice: DataService
+    private dataservice: DataService,
+    private loadingservice: LoadingService,
+    private network: Network,
   ) {
     this.initializeApp();
   }
@@ -46,6 +47,19 @@ export class MyApp {
         this.checkAuth();
         this.splashScreen.hide();
       }).subscribe();
+
+      // Check connect internet
+      this.network.onDisconnect().subscribe(disconnect => {
+        this.loadingservice.ToastNet();
+        console.log('disconnect network');
+      })
+      this.network.onConnect().subscribe(connect => {
+        this.loadingservice.hideNet();
+        console.log('connect network');
+      })
+
+      console.log('speed internet: ' + this.network.downlinkMax)
+
     });
   }
 

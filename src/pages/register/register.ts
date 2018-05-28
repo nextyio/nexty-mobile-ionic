@@ -4,7 +4,6 @@ import { HomePage } from "../home/home";
 import { AuthService } from "../../services/auth.service";
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { InAppBrowser } from "@ionic-native/in-app-browser";
-import { LoadingService } from '../../services/loading.service';
 import { DataService } from '../../services/data.service';
 
 const PASSWORD_PATTERN = /^.{6,}$/;
@@ -26,7 +25,6 @@ export class RegisterPage {
     private formBuilder: FormBuilder,
     private menuCtrl: MenuController,
     private authService: AuthService,
-    private loadingService: LoadingService,
     private dataservice: DataService
   ) {
     this.registerForm = this.formBuilder.group({

@@ -1,10 +1,10 @@
-import {EventEmitter, Injectable} from "@angular/core";
-import {Observable} from "rxjs/Observable";
-import {ISubscription} from "rxjs/Subscription";
+import { EventEmitter, Injectable } from "@angular/core";
+import { Observable } from "rxjs/Observable";
+import { ISubscription } from "rxjs/Subscription";
 import "rxjs/add/observable/interval";
-import {HttpClient} from "@angular/common/http";
-import {Constants} from "../helper/constants";
-import {Utils} from "../helper/utils";
+import { HttpClient } from "@angular/common/http";
+import { Constants } from "../helper/constants";
+import { Utils } from "../helper/utils";
 
 @Injectable()
 export class RateService {
@@ -15,9 +15,9 @@ export class RateService {
   }>;
   rateHistoryUpdated = new EventEmitter<any>();
   private rateHistorySubscription: ISubscription;
-
   rate: number;
   rateUpdated = new EventEmitter<any>();
+
   private rateSubscription: ISubscription;
 
   constructor(public http: HttpClient) {
@@ -62,12 +62,22 @@ export class RateService {
   }
 
   private getRateData(): Observable<any> {
-    return this.http.get(Constants.SERVICE_API + '/api/getLastPrice')
+    // return this.http.get(Constants.SERVICE_API + '/api/getLastPrice')
+    //   .map((res) => {
+    //     if (res != undefined) {
+    //       let rate = res['lastPrice'];
+    //       if (rate != undefined && !isNaN(rate)) {
+    //         this.rate = Utils.round(rate, 2);
+    //       }
+    //     }
+    //   });
+    return this.http.get(Constants.GETUSD)
       .map((res) => {
         if (res != undefined) {
-          let rate = res['lastPrice'];
+          let rate = res['data'].quotes.USD.price;
           if (rate != undefined && !isNaN(rate)) {
-            this.rate = Utils.round(rate, 2);
+            // this.rate = Utils.round(rate, 2);
+            this.rate = rate;
           }
         }
       });
@@ -92,4 +102,5 @@ export class RateService {
         }
       });
   }
+
 }

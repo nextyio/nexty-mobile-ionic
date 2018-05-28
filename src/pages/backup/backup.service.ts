@@ -1,4 +1,4 @@
-import { Injectable, trigger } from "@angular/core";
+import { Injectable } from "@angular/core";
 import { Observable } from "rxjs/Observable";
 import 'rxjs/add/operator/delay';
 import { HttpClient } from "@angular/common/http";
@@ -7,14 +7,11 @@ import * as CryptoJS from "crypto-js";
 import { Constants } from "../../helper/constants";
 import "rxjs/add/operator/catch";
 import { Utils } from "../../helper/utils";
-import { DataService } from "../../services/data.service";
 import { File } from '@ionic-native/file';
 import moment from 'moment';
 import { LoadingService } from "../../services/loading.service";
 import { SocialSharing } from "@ionic-native/social-sharing";
-import { Subject } from "rxjs/Subject";
 import { Platform } from "ionic-angular";
-declare var cordova: any;
 
 @Injectable()
 export class BackupService {
@@ -25,7 +22,6 @@ export class BackupService {
   constructor(
     private http: HttpClient,
     private authService: AuthService,
-    private dataservice: DataService,
     private file: File,
     private loadingService: LoadingService,
     private socialSharing: SocialSharing,

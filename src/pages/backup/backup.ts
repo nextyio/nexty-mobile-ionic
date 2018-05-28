@@ -5,11 +5,7 @@ import { BackupService } from "./backup.service";
 import { LoadingService } from "../../services/loading.service";
 import { DataService } from '../../services/data.service';
 import { SocialSharing } from '@ionic-native/social-sharing';
-import { FileChooser } from '@ionic-native/file-chooser';
 import { FilePath } from '@ionic-native/file-path';
-import { Subject } from 'rxjs/Subject';
-import { Message } from '@angular/compiler/src/i18n/i18n_ast';
-import { IOSFilePicker } from '@ionic-native/file-picker';
 
 /**
  * Generated class for the AboutPage page.
@@ -37,7 +33,6 @@ export class BackupPage {
     private dataservice: DataService,
     private socialSharing: SocialSharing,
     private filePath: FilePath,
-    private filePicker: IOSFilePicker,
     public platform: Platform,
   ) {
   }
