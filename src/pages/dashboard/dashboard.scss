@@ -1,174 +1,177 @@
 page-dashboard {
-  .scroll-content {
-    background-color: #F5FCFF;
-  }
-  .coin {
-    // height: 16%;
-    background-color: #f8b62d;
-  }
-  .text-coin {
-    padding: 3% 0;
-    font-family: Poppins;
-    font-size: 40px;
-    text-align: center;
-    color: white;
-  }
-  .exchangeRate {
-    margin: 10px;
-  }
-  .text-exchange {
-    font-family: Poppins;
-    font-size: 18px;
-    margin-bottom: 8px;
-    text-align: center;
-    i {
-      font-size: 16px;
+    .scroll-content {
+        background-color: #F5FCFF;
     }
-  }
-  #chart {
-    display: block;
-  }
-  .checkBackUp {
-    height: 10%;
-    background: red;
-    color: white;
-    font-size: 120%;
-    padding: 0 2%;
-  }
-  .ttl-backup {
-    float: left;
-    padding-top: 16px;
-  }
-  button.btn-backup {
-    float: right;
-    color: white;
-    height: 85%;
-    padding: 0 23px;
-  }
-  .toastNetwork {
-    >div {
-      background-color: red !important;
+    .coin {
+        // height: 16%;
+        background-color: #f8b62d;
     }
-  }
-  .toast-container {
-    background: red !important;
-  } // css chart
-  // .scroll-content {
-  //   background-color: map-get($colors, light);
-  // }
-  ion-card-header {
-    font-weight: bold;
-  }
-  @keyframes lds-double-ring {
-    0% {
-      -webkit-transform: rotate(0);
-      transform: rotate(0);
+    .text-coin {
+        padding: 3% 0;
+        font-family: Poppins;
+        font-size: 40px;
+        text-align: center;
+        color: white;
     }
-    100% {
-      -webkit-transform: rotate(360deg);
-      transform: rotate(360deg);
+    .exchangeRate {
+        margin: 10px;
     }
-  }
-  @-webkit-keyframes lds-double-ring {
-    0% {
-      -webkit-transform: rotate(0);
-      transform: rotate(0);
+    .text-exchange {
+        font-family: Poppins;
+        font-size: 18px;
+        margin-bottom: 8px;
+        text-align: center;
+        i {
+            font-size: 16px;
+        }
     }
-    100% {
-      -webkit-transform: rotate(360deg);
-      transform: rotate(360deg);
+    #chart {
+        display: block;
     }
-  }
-  @keyframes lds-double-ring_reverse {
-    0% {
-      -webkit-transform: rotate(0);
-      transform: rotate(0);
+    .checkBackUp {
+        height: 10%;
+        background: #D50000;
+        color: white;
+        font-size: 120%;
+        padding: 0 2%;
     }
-    100% {
-      -webkit-transform: rotate(-360deg);
-      transform: rotate(-360deg);
+    .ttl-backup {
+        float: left;
+        padding-top: 16px;
     }
-  }
-  @-webkit-keyframes lds-double-ring_reverse {
-    0% {
-      -webkit-transform: rotate(0);
-      transform: rotate(0);
+    button.btn-backup {
+        float: right;
+        color: white;
+        height: 85%;
+        padding: 0 23px;
     }
-    100% {
-      -webkit-transform: rotate(-360deg);
-      transform: rotate(-360deg);
+    .toastNetwork {
+        >div {
+            background-color: #D50000 !important;
+        }
     }
-  }
-  .lds-double-ring {
-    position: relative;
-  }
-  .lds-double-ring div {
-    position: absolute;
-    width: 50px;
-    height: 50px;
-    top: 20px;
-    left: 20px;
-    border-radius: 50%;
-    border: 8px solid #000;
-    border-color: #e15b64 transparent #e15b64 transparent;
-    -webkit-animation: lds-double-ring 1s linear infinite;
-    animation: lds-double-ring 1s linear infinite;
-  }
-  .lds-double-ring div:nth-child(2) {
-    width: 30px;
-    height: 30px;
-    top: 30px;
-    left: 30px;
-    border-color: transparent #f47e60 transparent #f47e60;
-    -webkit-animation: lds-double-ring_reverse 1s linear infinite;
-    animation: lds-double-ring_reverse 1s linear infinite;
-  }
-  .lds-double-ring {
-    width: 100% !important;
-    height: 250px !important;
-    -webkit-transform: translate(-100px, -100px) scale(1) translate(100px, 100px);
-    transform: translate(-100px, -100px) scale(1) translate(100px, 100px);
-  }
-  .ng-scope {
-    background-color: rgba(0, 0, 0, 0.171);
-  }
-  #loading {
-    position: absolute;
-    top: 0;
-    left: 0; // display: none;
-    height: 100%;
-    width: 100%;
-    z-index: 1000000;
-    padding: 85px 40%;
-  }
-  .chart {
-    position: relative;
-  }
-  .ul-typeChart {
-    margin: 0;
-    padding: 0;
-    height: 7%;
-    width: 100%;
-    li {
-      float: left;
-      width: 30%;
-      list-style-type: none;
-      text-align: center;
-      padding: 1%;
-      margin: 0 1.6%;
-      border-radius: 5px;
-      font-weight: bold;
-      background-color: #55acee;
-      color: white;
-      box-shadow: 0px 3px 0px 0px #277ab9;
+    .toast-container {
+        background: #D50000 !important;
+    } // css chart
+    // .scroll-content {
+    //   background-color: map-get($colors, light);
+    // }
+    ion-card-header {
+        font-weight: bold;
     }
-    li:active {
-      transform: translate(0px, 5px);
-      -webkit-transform: translate(0px, 5px);
-      box-shadow: 0px 1px 0px 0px;
+    @keyframes lds-double-ring {
+        0% {
+            -webkit-transform: rotate(0);
+            transform: rotate(0);
+        }
+        100% {
+            -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+        }
     }
-    li:hover {
-      background-color: #6FC6FF;
+    @-webkit-keyframes lds-double-ring {
+        0% {
+            -webkit-transform: rotate(0);
+            transform: rotate(0);
+        }
+        100% {
+            -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+        }
     }
-  }
+    @keyframes lds-double-ring_reverse {
+        0% {
+            -webkit-transform: rotate(0);
+            transform: rotate(0);
+        }
+        100% {
+            -webkit-transform: rotate(-360deg);
+            transform: rotate(-360deg);
+        }
+    }
+    @-webkit-keyframes lds-double-ring_reverse {
+        0% {
+            -webkit-transform: rotate(0);
+            transform: rotate(0);
+        }
+        100% {
+            -webkit-transform: rotate(-360deg);
+            transform: rotate(-360deg);
+        }
+    }
+    .lds-double-ring {
+        position: relative;
+    }
+    .lds-double-ring div {
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        top: 20px;
+        left: 20px;
+        border-radius: 50%;
+        border: 8px solid #000;
+        border-color: #e15b64 transparent #e15b64 transparent;
+        -webkit-animation: lds-double-ring 1s linear infinite;
+        animation: lds-double-ring 1s linear infinite;
+    }
+    .lds-double-ring div:nth-child(2) {
+        width: 30px;
+        height: 30px;
+        top: 30px;
+        left: 30px;
+        border-color: transparent #f47e60 transparent #f47e60;
+        -webkit-animation: lds-double-ring_reverse 1s linear infinite;
+        animation: lds-double-ring_reverse 1s linear infinite;
+    }
+    .lds-double-ring {
+        width: 100% !important;
+        height: 250px !important;
+        -webkit-transform: translate(-100px, -100px) scale(1) translate(100px, 100px);
+        transform: translate(-100px, -100px) scale(1) translate(100px, 100px);
+    }
+    .ng-scope {
+        background-color: rgba(0, 0, 0, 0.171);
+    }
+    #loading {
+        position: absolute;
+        top: 0;
+        left: 0; // display: none;
+        height: 100%;
+        width: 100%;
+        z-index: 1000000;
+        padding: 85px 40%;
+    }
+    .chart {
+        position: relative;
+    }
+    .ul-typeChart {
+        margin: 0;
+        padding: 0;
+        height: 7%;
+        width: 100%;
+        li {
+            float: left;
+            width: 30%;
+            list-style-type: none;
+            text-align: center;
+            padding: 1%;
+            margin: 0 1.6%;
+            border-radius: 5px;
+            font-weight: bold;
+            background-color: #55acee;
+            color: white;
+            box-shadow: 0px 3px 0px 0px #277ab9;
+        }
+        li:active {
+            transform: translate(0px, 5px);
+            -webkit-transform: translate(0px, 5px);
+            box-shadow: 0px 1px 0px 0px;
+        }
+        li:hover {
+            background-color: #6FC6FF;
+        }
+        li.activee {
+            background: #6FC6FF;
+        }
+    }
 }

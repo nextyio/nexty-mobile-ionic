@@ -9,6 +9,11 @@ import { Utils } from "../../helper/utils";
 import { DataService } from '../../services/data.service';
 import { BackupPage } from '../backup/backup';
 import { HttpClient } from '@angular/common/http';
+import 'rxjs/add/operator/retry';
+import 'rxjs/add/operator/timeout';
+import 'rxjs/add/operator/delay';
+import 'rxjs/add/operator/map';
+import { Network } from '@ionic-native/network';
 declare var CanvasJS;
 
 /**
@@ -28,7 +33,8 @@ export class DashboardPage implements OnDestroy {
   public checkBackup: boolean;
   public toastNet;
   public datachart
-  public typeChart = ['D', 'W', 'ALL']
+  public typeChart = [{ "Title": "Day", "Value": "D" }, { "Title": "Week", "Value": "W" }, { "Title": "All", "Value": "ALL" }]
+  public TimeOut: boolean = true;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -37,7 +43,8 @@ export class DashboardPage implements OnDestroy {
     private service: DashboardService,
     private dataservice: DataService,
     private platform: Platform,
-    public http: HttpClient
+    public http: HttpClient,
+    private network: Network,
   ) {
     this.rateService.rateHistoryUpdated.subscribe(() => this.updateGraph());
     this.service.load();
@@ -50,11 +57,31 @@ export class DashboardPage implements OnDestroy {
     this.rateService.startRateRecurring();
     this.walletService.startBalanceRecurring();
     // this.loadchart();
+    this.network.onchange().subscribe((net: Network) => {
+      console.log('type:', net.type)
+      console.log('check net:', net);
+      this.getDataChart('W');
+    })
+
+    var selector, elems, makeActive;
+    selector = '.ul-typeChart li';
+    elems = document.querySelectorAll(selector);
+    elems[1].classList.add('activee')
+    makeActive = function () {
+      for (var i = 0; i < elems.length; i++) {
+        elems[i].classList.remove('activee');
+      }
+      this.classList.add('activee');
+    };
+
+    for (var i = 0; i < elems.length; i++) {
+      elems[i].addEventListener('mousedown', makeActive);
+    }
   }
-  setTypeChart(type) {
-    this.getDataChart(type);
-  }
-  getDataChart(type?) {
+
+
+
+  getDataChart(type) {
     document.getElementById('loading').style.display = 'block';
     var time = new Date;
     var url = '';
@@ -72,28 +99,24 @@ export class DashboardPage implements OnDestroy {
       }
         break;
     }
-    this.http.get(url)
+    this.http.get(url).timeout(5000)
       .subscribe(res => {
+        this.TimeOut = false
         this.datachart = res;
         // console.log('Get data chart success: ', this.datachart);
         this.loadchart();
       })
+    setTimeout(() => {
+      if (this.TimeOut == true) {
+        console.log()
+      }
+    }, 5000);
   }
 
 
   ngAfterViewInit() {
     this.platform.ready().then(() => {
       this.getDataChart('W');
-      // this.network.onDisconnect().subscribe(disconnect => {
-      //   this.loadingservice.ToastNet();
-      //   console.log('disconnect network');
-      // })
-      // this.network.onConnect().subscribe(connect => {
-      //   this.loadingservice.hideNet();
-      //   console.log('connect network');
-      //   this.ionViewDidLoad();
-      //   this.balance;
-      // })
     })
   }
   ionViewDidEnter() {
@@ -207,9 +230,9 @@ export class DashboardPage implements OnDestroy {
       data: [{
         type: "line",
         xValueType: "dateTime",
-        yValueFormatString: "####.########",
+        yValueFormatString: "####.#########",
         xValueFormatString: "DDD, MMM DD YYYY, HH:mm:ss K",
-        showInLegend: true,
+        showInLegend: false,
         name: "Price(USD)",
         dataPoints: dataPoints1,
         // legendText: 'Price(USD)'
@@ -217,8 +240,8 @@ export class DashboardPage implements OnDestroy {
       {
         type: "line",
         xValueType: "dateTime",
-        yValueFormatString: "####.#####",
-        showInLegend: true,
+        yValueFormatString: "####.#########",
+        showInLegend: false,
         name: "Price(BTC)",
         dataPoints: dataPoints2,
         // legendText: 'Price(BTC)'
@@ -238,18 +261,19 @@ export class DashboardPage implements OnDestroy {
 
     let that = this;
     function updateChart() {
-      that.datachart['price_btc'].forEach(x => {
-        dataPoints2.push({
-          x: x[0],
-          y: x[1].toFixed(8) * 1e3
-        })
-      });
       that.datachart['price_usd'].forEach(x => {
         dataPoints1.push({
           x: x[0],
-          y: x[1].toFixed(10) * 1e1
+          y: x[1].toFixed(8) * 1e0
         })
       });
+      that.datachart['price_btc'].forEach(x => {
+        dataPoints2.push({
+          x: x[0],
+          y: x[1].toFixed(8) * 1e0
+        })
+      });
+
       chart.render();
       document.getElementById('loading').style.display = "none";
       // that.http.get('https://graphs2.coinmarketcap.com/currencies/nexty/1526543365000/1527148165000/')

@@ -39,6 +39,7 @@ export class LoadingService {
   hide() {
     this.loading.dismiss();
   }
+
   ToastNet() {
     this.toastNet = this.toastCtrl.create({
       message: 'Please connect internet',

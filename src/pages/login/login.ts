@@ -1,9 +1,9 @@
-import {Component} from '@angular/core';
-import {MenuController, NavController, NavParams} from 'ionic-angular';
-import {HomePage} from "../home/home";
-import {AuthService} from "../../services/auth.service";
-import {BarcodeScanner, BarcodeScanResult} from "@ionic-native/barcode-scanner";
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { Component } from '@angular/core';
+import { MenuController, NavController, NavParams } from 'ionic-angular';
+import { HomePage } from "../home/home";
+import { AuthService } from "../../services/auth.service";
+import { BarcodeScanner, BarcodeScanResult } from "@ionic-native/barcode-scanner";
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 const PASSWORD_PATTERN = /^.{6,}$/;
 
@@ -19,12 +19,14 @@ export class LoginPage {
   address: string;
   password: string;
 
-  constructor(public navCtrl: NavController,
-              public navParams: NavParams,
-              private formBuilder: FormBuilder,
-              private menuCtrl: MenuController,
-              private barcodeScanner: BarcodeScanner,
-              private authService: AuthService) {
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    private formBuilder: FormBuilder,
+    private menuCtrl: MenuController,
+    private barcodeScanner: BarcodeScanner,
+    private authService: AuthService
+  ) {
     this.loginForm = this.formBuilder.group({
       'address': ['', Validators.required],
       'password': ['', Validators.compose([
@@ -50,7 +52,9 @@ export class LoginPage {
       console.log('Error: ', err);
     });
   }
-
+  focusPw() {
+    this.loginFail = false;
+  }
   login() {
     if (this.loginForm.valid) {
       this.address = this.loginForm.controls['address'].value;

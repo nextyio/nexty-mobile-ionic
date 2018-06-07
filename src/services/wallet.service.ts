@@ -49,15 +49,15 @@ export class WalletService {
   }
 
 
-  send(address: string, nty: number, password: string): Observable<any> {
+  send(address: string, nty: number, password: string, exData?: string): Observable<any> {
     // check password
     if (!this.authService.validatePassword(password)) {
-      return Observable.throw("Password invalid");
+      return Observable.throw("Invalid local passcode");
     }
 
     // check address
     if (!this.web3.utils.isAddress(address)) {
-      return Observable.throw("Address invalid");
+      return Observable.throw("Invalid address");
     }
 
     // let sendValue = Constants.BASE_NTY.valueOf() * nty;
@@ -67,11 +67,22 @@ export class WalletService {
     // let sendValue2 = Constants.BASE_NTY * nty;
     // let hexValue2 = '0x'+ sendValue2.toString(16);
     // console.log('hexvalue2= '+hexValue2,'sendvalue2= '+sendValue2, 'sendtohex=' +sendValue2.toString())
-    let txData: Tx = {
-      from: this.authService.address,
-      to: address,
-      value: hexValue
-    };
+    let txData: Tx
+    if (exData || exData != null) {
+      txData = {
+        from: this.authService.address,
+        to: address,
+        value: hexValue,
+        data: exData
+      };
+    } else {
+      txData = {
+        from: this.authService.address,
+        to: address,
+        value: hexValue
+      };
+    }
+
     return Observable.fromPromise(this.web3.eth.getTransactionCount(this.authService.address))
       .mergeMap((nonce) => {
         return new Observable(observer => {
@@ -90,6 +101,7 @@ export class WalletService {
             this.web3.eth.sendSignedTransaction(rawTx, (error, hash) => {
               if (error) {
                 observer.error(error.message);
+                console.log("error: " + error.message + "-", error, "err2" + JSON.stringify(error))
               } else {
                 // update balance
                 this.updateBalance().subscribe(() => {
@@ -98,7 +110,7 @@ export class WalletService {
               }
             }).catch(err => {
               // ignore error
-              // console.log(err.message);
+              console.log("catch: " + err.message, JSON.stringify(err));
             });
           });
         });

@@ -55,6 +55,7 @@ export class RegisterPage {
     if (password != confirmPassword) {
       AC.get('confirmPassword').setErrors({ MatchPassword: true })
     } else {
+      AC.get('confirmPassword').setErrors(null)
       return null
     }
   }

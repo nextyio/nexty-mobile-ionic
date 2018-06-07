@@ -16,24 +16,24 @@
 
   <form [formGroup]="registerForm" padding-horizontal>
     <ion-item padding-horizontal>
-      <ion-label floating>Local Password</ion-label>
+      <ion-label floating>Local passcode</ion-label>
       <ion-input [formControl]="registerForm.controls['password']" type="password"></ion-input>
     </ion-item>
     <ion-item no-lines no-margin *ngIf="!registerForm.controls.password.valid &&
         registerForm.controls.password.dirty" class="validator-error">
       <ion-label color="danger">
-        Local Password needs at least 6 character
+        Local passcode needs at least 6 character
       </ion-label>
     </ion-item>
 
     <ion-item padding-horizontal>
-      <ion-label floating>Confirm Local Password</ion-label>
-      <ion-input (ionFocus)="focusConfirm()" [formControl]="registerForm.controls['confirmPassword']" type="password"></ion-input>
+      <ion-label floating>Confirm local passcode</ion-label>
+      <ion-input (input)="focusConfirm()" [formControl]="registerForm.controls['confirmPassword']" type="password"></ion-input>
     </ion-item>
     <ion-item no-lines padding-horizontal *ngIf="registerForm.controls.confirmPassword.errors?.MatchPassword && isConfirmFocus"
       class="validator-error">
       <ion-label color="danger">
-        Local Password not match
+        Local passcode not match
       </ion-label>
     </ion-item>
 

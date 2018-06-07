@@ -57,6 +57,12 @@ export class MyApp {
         this.loadingservice.hideNet();
         console.log('connect network');
       })
+      this.network.onchange().subscribe((net: Network) => {
+        console.log('type:', net.type)
+        if (net.type == 'online') {
+          this.loadingservice.hideNet();
+        }
+      })
 
       console.log('speed internet: ' + this.network.downlinkMax)
 

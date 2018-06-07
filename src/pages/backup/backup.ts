@@ -6,7 +6,9 @@ import { LoadingService } from "../../services/loading.service";
 import { DataService } from '../../services/data.service';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { FilePath } from '@ionic-native/file-path';
-
+import { File } from '@ionic-native/file';
+import moment from 'moment';
+import { AuthService } from '../../services/auth.service';
 /**
  * Generated class for the AboutPage page.
  *
@@ -22,7 +24,8 @@ export class BackupPage {
 
   code: string;
   copied: boolean;
-
+  public urlFile: string;
+  public namefile: string;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -34,6 +37,8 @@ export class BackupPage {
     private socialSharing: SocialSharing,
     private filePath: FilePath,
     public platform: Platform,
+    private file: File,
+    private authService: AuthService,
   ) {
   }
 
@@ -50,12 +55,12 @@ export class BackupPage {
   backup() {
     let alert = this.alertCtrl.create({
       title: 'Confirm backup',
-      message: 'Enter your local password to process',
+      message: 'Enter your local passcode to process',
       inputs: [
         {
           name: 'password',
           type: 'password',
-          placeholder: 'local Password',
+          placeholder: 'Local passcode',
         },
       ],
       buttons: [
@@ -100,6 +105,50 @@ export class BackupPage {
         alert.present();
       } else {
         this.code = this.service.code;
+        // create name keystore
+        var dateTime = new Date();
+        let name = 'nexty--' + moment().format('YYYY-MM-DD') + '-' + dateTime.getTime() + '--' + this.authService.address + '.txt';
+        // save file keystore 
+        // var dataFile = { "code-nexty": this.service.code }
+        if (this.platform.is('android')) {
+          // console.log("content: " + JSON.stringify(dataFile));
+          this.file.writeFile(this.file.externalDataDirectory, name, this.service.code + '').then(res => {
+            this.loadingService.showToat('save file: ' + res.nativeURL);
+            console.log(JSON.stringify(res));
+            this.urlFile = res.nativeURL;
+            // var newPath = this.urlFile.substr(0, this.urlFile.lastIndexOf('/And') + 1);
+            // this.file.checkDir(newPath, 'BackupNexty').then(exists => {
+            //   if (!exists) {
+            //     this.file.createDir(newPath, "BackupNexty", false).then(path => {
+            //       console.log("path:", path, JSON.stringify(path))
+            //       this.file.writeFile(path.nativeURL, name, this.code + '').then(resfile => {
+            //         console.log(JSON.stringify(resfile));
+            //       })
+            //       var pathOld = this.urlFile.substr(0, this.urlFile.lastIndexOf('/') + 1)
+            //     })
+            //   } else {
+
+            //     this.file.writeFile(newPath + 'BackupNexty/', name, this.code + '').then(resfile => {
+            //       console.log(JSON.stringify(resfile));
+            //     })
+            //   }
+            // })
+
+          }).catch(err => {
+            console.log(err);
+          })
+        } else if (this.platform.is('ios')) {
+          this.file.writeFile(this.file.tempDirectory, name, this.service.code + '')
+            .then(res => {
+              console.log("write file success: " + JSON.stringify(res));
+              this.urlFile = res.nativeURL;
+              this.socialSharing.share(null, null, res.nativeURL).then(value => {
+                console.log(value);
+              })
+            }).catch(err => {
+              console.log("Error", JSON.stringify(err));
+            })
+        }
       }
     });
   }
@@ -113,8 +162,8 @@ export class BackupPage {
   }
   shareFile() {
     if (this.platform.is('android')) {
-      console.log(this.service.urlFile);
-      this.filePath.resolveNativePath(this.service.urlFile).then(path => {
+      console.log(this.urlFile);
+      this.filePath.resolveNativePath(this.urlFile).then(path => {
         this.socialSharing.share(null, null, path).then(value => {
           console.log(value);
         }).catch(err => {
@@ -124,7 +173,7 @@ export class BackupPage {
         console.log(err)
       })
     } else if (this.platform.is('ios')) {
-      this.socialSharing.share(null, null, this.service.urlFile);
+      this.socialSharing.share(null, null, this.urlFile);
     }
   }
 }

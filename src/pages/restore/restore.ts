@@ -26,6 +26,7 @@ export class RestorePage {
   restoreForm: FormGroup;
   code: string;
   password: string;
+  confirmPassword: string;
   public urlFile
 
   constructor(public navCtrl: NavController,
@@ -63,12 +64,17 @@ export class RestorePage {
   matchPassword(AC: AbstractControl) {
     let password = AC.get('password').value; // to get value in input tag
     let confirmPassword = AC.get('confirmPassword').value; // to get value in input tag
-    if (password != confirmPassword) {
-      AC.get('confirmPassword').setErrors({ MatchPassword: true })
-    } else {
+    if (password == confirmPassword) {
+      AC.get('confirmPassword').setErrors(null);
       return null;
+    } else {
+      AC.get('confirmPassword').setErrors({ MatchPassword: true })
     }
+
   }
+  // inputPasscode() {
+  //   this.confirmPassword = '';
+  // }
 
   restore() {
     if (this.restoreForm.valid) {
@@ -98,7 +104,7 @@ export class RestorePage {
   }
 
   chooserFile() {
-    this.loadingService.showToat('This feature is coming soon')
+    // this.loadingService.showToat('This feature is coming soon')
     if (this.platform.is('android')) {
       this.fileChooser.open().then(uri => {
         console.log(uri);
@@ -129,22 +135,43 @@ export class RestorePage {
       this.filePath.resolveNativePath(urlFile).then(url => {
         let correctPath = url.substr(0, url.lastIndexOf('/') + 1);
         let currentName = url.substring(url.lastIndexOf('/') + 1, url.length);
-        this.file.readAsBinaryString(correctPath, currentName).then(response => {
-          this.code = response;
-        }).catch(err => {
-          console.log(err);
-        })
+        if (currentName.substring(currentName.lastIndexOf('.') + 1, currentName.length) == 'txt' && currentName.indexOf('--') > -1&&currentName.indexOf('nexty')>-1) {
+          this.file.readAsBinaryString(correctPath, currentName).then(response => {
+            // var content = JSON.parse(response)
+            // console.log(JSON.stringify(response))
+            // this.code = content['code-nexty'];
+            if (response != null || response != '') {
+              this.code = response;
+            } else {
+              this.loadingService.showToat('Backup file error')
+            }
+          }).catch(err => {
+            console.log(err);
+          })
+        } else {
+          this.loadingService.showToat('Please select a valid backup file')
+        }
+
       })
     } else if (this.platform.is('ios')) {
       let correctPath = 'file://' + urlFile.substr(0, urlFile.lastIndexOf('/') + 1);
       let currentName = urlFile.substring(urlFile.lastIndexOf('/') + 1);
-      console.log("correctPath: " + correctPath, "currentName: " + currentName);
-      this.file.readAsText(correctPath, currentName).then(response => {
-        console.log(response);
-        this.code = response;
-      }).catch(err => {
-        console.log(JSON.stringify(err));
-      })
+      //&& currentName.substring(0, currentName.indexOf("--")) == 'nexty'
+      if (currentName.substring(currentName.lastIndexOf('.') + 1, currentName.length) == 'txt' && currentName.indexOf('--') > -1&&currentName.indexOf('nexty')>-1) {
+        console.log("correctPath: " + correctPath, "currentName: " + currentName);
+        this.file.readAsText(correctPath, currentName).then(response => {
+          console.log(response);
+          if (response != null || response != '') {
+            this.code = response;
+          } else {
+            this.loadingService.showToat('Backup file error')
+          }
+        }).catch(err => {
+          console.log(JSON.stringify(err));
+        })
+      } else {
+        this.loadingService.showToat('Please select a valid backup file')
+      }
     }
   }
 }

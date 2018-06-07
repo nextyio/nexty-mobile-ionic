@@ -76,7 +76,8 @@ export class HistoryPage {
   }
 
   goDetail(transaction: Transaction) {
-    this.navCtrl.push(TransactionDetailPage, { data: transaction.data });
+    console.log(JSON.stringify(transaction))
+    this.navCtrl.push(TransactionDetailPage, { data: transaction.data, time: transaction.datetime });
   }
 
   doInfinite(infiniteScroll) {

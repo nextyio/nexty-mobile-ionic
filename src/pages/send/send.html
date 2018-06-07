@@ -17,7 +17,7 @@
       <ion-col>
         <ion-item no-padding>
           <ion-label floating>To</ion-label>
-          <ion-input type="text" (ionFocus)="focusAddress()" [(ngModel)]="toAddress"></ion-input>
+          <ion-input type="text" (ionFocus)="focusAddress()" [(ngModel)]="toAddress" [disabled]="!checkQRcode"></ion-input>
         </ion-item>
       </ion-col>
       <ion-col col-auto>
@@ -37,7 +37,7 @@
       <ion-col>
         <ion-item no-padding>
           <ion-label floating>NTY</ion-label>
-          <ion-input type="number" (ionFocus)="focusPNTY()" [(ngModel)]="nty"></ion-input>
+          <ion-input type="number" (ionFocus)="focusPNTY()" [(ngModel)]="nty" [disabled]="!checkQRcode"></ion-input>
         </ion-item>
       </ion-col>
       <ion-col col-auto>
@@ -46,7 +46,7 @@
       <ion-col>
         <ion-item no-padding>
           <ion-label floating>USD</ion-label>
-          <ion-input type="number" [(ngModel)]="usd"></ion-input>
+          <ion-input type="number" [(ngModel)]="usd" [disabled]="!checkQRcode"></ion-input>
         </ion-item>
       </ion-col>
     </ion-row>
@@ -55,9 +55,19 @@
         Please enter a valid amount.
       </ion-label>
     </ion-item>
+    <!-- <ion-item no-lines no-margin *ngIf="!checkQRcode" class="validator-error">
+      <ion-label color="light">
+        Extra data: {{ExtraData}}
+      </ion-label>
+    </ion-item> -->
+    <p color="danger" *ngIf="!checkQRcode">Extra data: {{ExtraData}}</p>
 
     <ion-item no-lines text-center>
-      <button class="normal-button" ion-button color="secondary" [disabled]="ntyValue == 0 || toAddress == ''" (click)="send()">Send</button>
+      <button class="normal-button" ion-button color="secondary" [disabled]="ntyValue == 0 || toAddress == ''||toAddress==null ||!isValidPNTY()"
+        (click)="send()">Send</button>
+    </ion-item>
+    <ion-item text-center>
+      <button class="normal-button" ion-button color="primary" *ngIf="!checkQRcode" (click)="cancel()">Cancel</button>
     </ion-item>
   </ion-list>
 </ion-content>

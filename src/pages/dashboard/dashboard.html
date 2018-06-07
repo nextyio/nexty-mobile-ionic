@@ -32,7 +32,7 @@
   </div>
 
   <ul class="ul-typeChart">
-    <li *ngFor="let type of typeChart" (click)="setTypeChart(type)">{{type}}</li>
+    <li *ngFor="let type of typeChart" (click)="getDataChart(type.Value)" id="{{type.Value}}">{{type.Title}}</li>
   </ul>
 
   <div id="chart">

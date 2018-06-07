@@ -1,9 +1,9 @@
-import {Component} from '@angular/core';
-import {NavController, NavParams} from 'ionic-angular';
-import {HistoryModel} from "../history/history.model";
-import {Constants} from "../../helper/constants";
-import {AuthService} from "../../services/auth.service";
-import {InAppBrowser} from '@ionic-native/in-app-browser';
+import { Component } from '@angular/core';
+import { NavController, NavParams } from 'ionic-angular';
+import { HistoryModel } from "../history/history.model";
+import { Constants } from "../../helper/constants";
+import { AuthService } from "../../services/auth.service";
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 @Component({
   selector: 'page-detail',
@@ -21,8 +21,8 @@ export class TransactionDetailPage {
   confirmed: boolean;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-              private iab: InAppBrowser,
-              private authService: AuthService) {
+    private iab: InAppBrowser,
+    private authService: AuthService) {
   }
 
   ionViewDidLoad() {
@@ -31,13 +31,13 @@ export class TransactionDetailPage {
 
   getData() {
     this.data = this.navParams.get('data');
-
+    var time = this.navParams.get('time');
     this.tx = this.data.tx;
     this.from = this.data.from;
     this.to = this.data.to;
     this.down = (this.authService.address == this.to);
     this.quantity = this.data.value;
-    this.datetime = this.data.time.format("YYYY-MM-DD HH:mm:ss");
+    this.datetime = time;
 
     let timeNow = new Date().getTime();
     if (timeNow - this.data.time.utc().valueOf() < Constants.CONFIRM_DELAY) {

@@ -5,7 +5,6 @@ import { BarcodeScanner, BarcodeScanResult } from "@ionic-native/barcode-scanner
 import { RateService } from "../../services/rate.service";
 import { Utils } from "../../helper/utils";
 import { LoadingService } from "../../services/loading.service";
-import { Constants } from "../../helper/constants";
 import bigInt from "big-integer";
 @Component({
   selector: 'page-send',
@@ -16,10 +15,10 @@ export class SendPage {
   ntyValue: string;
   usdValue: string;
   toAddress: string;
-
+  checkQRcode: boolean = true;
   isFocusedPNTY: boolean
   isFocusedAddress: boolean
-
+  ExtraData: string;
   constructor(public navCtrl: NavController, public navParams: NavParams,
     private alertCtrl: AlertController,
     private loadingService: LoadingService,
@@ -30,9 +29,11 @@ export class SendPage {
     this.isFocusedPNTY = false;
   }
 
-  ionViewDidLoad() {
-  }
 
+  ionViewDidEnter() {
+    console.log("SendPage")
+
+  }
   focusAddress() {
     this.isFocusedAddress = true;
   }
@@ -74,7 +75,7 @@ export class SendPage {
     // calculate usd
     let nty = +this.ntyValue;
     if (!isNaN(nty) && (nty > 0)) {
-      let usd = Utils.round(nty * this.rateService.rate / Constants.PNTY_NTY, 2);
+      let usd = Utils.round(nty * this.rateService.rate, 5);
       this.usdValue = usd.toString();
     } else {
       this.usdValue = '';
@@ -90,7 +91,7 @@ export class SendPage {
     // calculate pnty
     let usd = +this.usdValue;
     if (!isNaN(usd) && (usd > 0) && this.rateService.rate > 0) {
-      let nty = Utils.round(usd / this.rateService.rate * Constants.PNTY_NTY);
+      let nty = Utils.round(usd / this.rateService.rate);
       this.ntyValue = nty.toString();
     } else {
       this.ntyValue = '';
@@ -99,19 +100,20 @@ export class SendPage {
 
   send() {
     let nty = +this.ntyValue;
+    let extraData = this.ExtraData;
     console.log("nty= " + nty);
-    if (isNaN(nty) || (nty <= 0)) {
+    if (nty <= 0) {
       console.log("invalid nty");
       return;
     }
     let alert = this.alertCtrl.create({
       title: 'Confirm send',
-      message: 'Enter your local password to process',
+      message: 'Enter your local passcode to process',
       inputs: [
         {
           name: 'password',
           type: 'password',
-          placeholder: 'Local Password'
+          placeholder: 'Local passcode'
         },
       ],
       buttons: [
@@ -124,7 +126,11 @@ export class SendPage {
         {
           text: 'Send',
           handler: (data) => {
-            this.doSend(bigInt(nty), data['password'])
+            if (extraData || extraData != null) {
+              this.doSend(bigInt(nty), data['password'], extraData)
+            } else {
+              this.doSend(bigInt(nty), data['password'])
+            }
           }
         }
       ]
@@ -132,45 +138,121 @@ export class SendPage {
     alert.present();
   }
 
-  doSend(nty, password: string) {
+  doSend(nty, password: string, data?) {
     this.loadingService.showLoading();
-    this.walletService.send(this.toAddress, nty, password).subscribe(
-      transactionHash => {
-        this.loadingService.hideloading();
+    if (data != null || data != "" || data) {
+      this.walletService.send(this.toAddress, nty, password, data).subscribe(
+        transactionHash => {
+          this.loadingService.hideloading();
 
-        // trigger update balance
-        this.walletService.updateBalance();
+          // trigger update balance
+          this.walletService.updateBalance();
 
-        // show message
-        let alert = this.alertCtrl.create({
-          title: 'Send success',
-          subTitle: transactionHash,
-          buttons: ['OK']
-        }
-        );
-        alert.present();
+          // show message
+          let alert = this.alertCtrl.create({
+            title: 'Send successfully',
+            subTitle: transactionHash,
+            buttons: ['OK']
+          }
+          );
+          alert.present();
+          this.checkQRcode = true;
+          this.toAddress = null;
+          this.nty = null;
+          this.usd = null;
 
-        this.toAddress = null;
-        this.nty = null;
-        this.usd = null;
+        },
+        errorMsg => {
+          var msg: string;
+          if (errorMsg == 'Returned error: insufficient funds for gas * price + value') {
+            msg = "You do not have enough NTY for this transaction"
+          } else {
+            msg = errorMsg
+          }
+          this.loadingService.hideloading();
+          let alert = this.alertCtrl.create({
+            title: 'Send error',
+            subTitle: msg,
+            buttons: ['OK']
+          }
+          );
+          alert.present();
+        });
+    } else {
+      this.walletService.send(this.toAddress, nty, password).subscribe(
+        transactionHash => {
+          this.loadingService.hideloading();
 
-      },
-      errorMsg => {
-        this.loadingService.hide();
-        let alert = this.alertCtrl.create({
-          title: 'Send error',
-          subTitle: errorMsg,
-          buttons: ['OK']
-        }
-        );
-        alert.present();
-      });
+          // trigger update balance
+          this.walletService.updateBalance();
+
+          // show message
+          let alert = this.alertCtrl.create({
+            title: 'Send successfully',
+            subTitle: transactionHash,
+            buttons: ['OK']
+          }
+          );
+          alert.present();
+          this.checkQRcode = true;
+          this.toAddress = null;
+          this.nty = null;
+          this.usd = null;
+
+        },
+        errorMsg => {
+          var msg: string;
+          if (errorMsg == 'Returned error: insufficient funds for gas * price + value') {
+            msg = "You do not have enough NTY for this transaction"
+          } else {
+            msg = errorMsg
+          }
+          this.loadingService.hideloading();
+          let alert = this.alertCtrl.create({
+            title: 'Send error',
+            subTitle: msg,
+            buttons: ['OK']
+          }
+          );
+          alert.present();
+        });
+    }
+
   }
-
+  cancel() {
+    this.checkQRcode = true;
+    this.toAddress = null;
+    this.nty = null;
+    this.usd = null;
+    this.ExtraData = null;
+    this.isFocusedAddress = false;
+    this.isFocusedPNTY = false;
+  }
   scanAddress() {
     this.barcodeScanner.scan().then((result: BarcodeScanResult) => {
+      console.log(result)
       if (!result.cancelled) {
-        this.toAddress = result.text;
+        if (result.text) {
+          try {
+            let typeQR = JSON.parse(result.text);
+            this.toAddress = typeQR["walletaddress"];
+            this.nty = typeQR["amount"];
+            var hexExtraData = ''
+            for (let i = 0; i < result.text.length; i++) {
+              hexExtraData += '' + result.text.charCodeAt(i).toString(16);
+            }
+            this.ExtraData = '0x' + hexExtraData
+            console.log('hex extra data: ' + this.ExtraData)
+            this.focusPNTY();
+            this.checkQRcode = false;
+          } catch (e) {
+            this.checkQRcode = true;
+            this.toAddress = result.text;
+            this.nty = null;
+            this.usd = null;
+            this.ExtraData = null;
+          }
+        }
         this.isFocusedAddress = true;
       }
     }, (err) => {
