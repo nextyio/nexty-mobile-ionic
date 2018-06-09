@@ -63,9 +63,6 @@ export class MyApp {
           this.loadingservice.hideNet();
         }
       })
-
-      console.log('speed internet: ' + this.network.downlinkMax)
-
     });
   }
 

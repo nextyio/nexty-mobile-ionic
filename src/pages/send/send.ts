@@ -19,6 +19,7 @@ export class SendPage {
   isFocusedPNTY: boolean
   isFocusedAddress: boolean
   ExtraData: string;
+  public extraDataView: string;
   constructor(public navCtrl: NavController, public navParams: NavParams,
     private alertCtrl: AlertController,
     private loadingService: LoadingService,
@@ -51,7 +52,7 @@ export class SendPage {
   }
 
   isValidPNTY() {
-    if (parseInt(this.ntyValue) > 0) {
+    if (parseFloat(this.ntyValue) > 0) {
       return true;
     } else {
       return false;
@@ -74,7 +75,7 @@ export class SendPage {
     this.ntyValue = value;
     // calculate usd
     let nty = +this.ntyValue;
-    if (!isNaN(nty) && (nty > 0)) {
+    if (nty > 0) {
       let usd = Utils.round(nty * this.rateService.rate, 5);
       this.usdValue = usd.toString();
     } else {
@@ -225,6 +226,7 @@ export class SendPage {
     this.nty = null;
     this.usd = null;
     this.ExtraData = null;
+    this.extraDataView = null;
     this.isFocusedAddress = false;
     this.isFocusedPNTY = false;
   }
@@ -245,12 +247,14 @@ export class SendPage {
             console.log('hex extra data: ' + this.ExtraData)
             this.focusPNTY();
             this.checkQRcode = false;
+            this.extraDataView = typeQR["uoid"];
           } catch (e) {
             this.checkQRcode = true;
             this.toAddress = result.text;
             this.nty = null;
             this.usd = null;
             this.ExtraData = null;
+            this.extraDataView = null;
           }
         }
         this.isFocusedAddress = true;

@@ -60,14 +60,14 @@
         Extra data: {{ExtraData}}
       </ion-label>
     </ion-item> -->
-    <p color="danger" *ngIf="!checkQRcode">Extra data: {{ExtraData}}</p>
+    <p color="danger" *ngIf="!checkQRcode">Extra data: {{extraDataView}}</p>
 
     <ion-item no-lines text-center>
-      <button class="normal-button" ion-button color="secondary" [disabled]="ntyValue == 0 || toAddress == ''||toAddress==null ||!isValidPNTY()"
+      <button style="margin-bottom: 0 !important;" class="normal-button" ion-button color="secondary" [disabled]="ntyValue == 0 || toAddress == ''||toAddress==null ||!isValidPNTY()"
         (click)="send()">Send</button>
     </ion-item>
-    <ion-item text-center>
-      <button class="normal-button" ion-button color="primary" *ngIf="!checkQRcode" (click)="cancel()">Cancel</button>
+    <ion-item text-center *ngIf="!checkQRcode">
+      <button style="margin-top: 0 !important;" class="normal-button" ion-button color="primary" (click)="cancel()">Cancel</button>
     </ion-item>
   </ion-list>
 </ion-content>

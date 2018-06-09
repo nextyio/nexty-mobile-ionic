@@ -98,7 +98,6 @@
     <plugin name="cordova-plugin-inappbrowser" spec="^2.0.2" />
     <plugin name="cordova-plugin-file" spec="^6.0.1" />
     <plugin name="cordova-clipboard" spec="^1.1.1" />
-    <plugin name="cordova-plugin-statusbar" spec="^2.4.1" />
     <plugin name="cordova-plugin-crosswalk-webview" spec="~2.4.0" />
     <preference name="xwalkCommandLine" value="--disable-pull-to-refresh-effect" />
     <preference name="xwalkMultipleApk" value="true" />
@@ -113,6 +112,7 @@
     <plugin name="cordova-plugin-network-information" spec="^2.0.1" />
     <plugin name="cordova-plugin-splashscreen" spec="https://github.com/apache/cordova-plugin-splashscreen.git" />
     <plugin name="cordova-custom-config" spec="^5.0.2" />
+    <plugin name="cordova-plugin-statusbar" spec="^2.4.2" />
     <engine name="browser" spec="5.0.3" />
     <engine name="ios" spec="4.5.4" />
     <engine name="windows" spec="5.0.0" />

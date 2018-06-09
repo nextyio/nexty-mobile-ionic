@@ -135,7 +135,7 @@ export class RestorePage {
       this.filePath.resolveNativePath(urlFile).then(url => {
         let correctPath = url.substr(0, url.lastIndexOf('/') + 1);
         let currentName = url.substring(url.lastIndexOf('/') + 1, url.length);
-        if (currentName.substring(currentName.lastIndexOf('.') + 1, currentName.length) == 'txt' && currentName.indexOf('--') > -1&&currentName.indexOf('nexty')>-1) {
+        if (currentName.substring(currentName.lastIndexOf('.') + 1, currentName.length) == 'txt' && currentName.indexOf('nexty') > -1) {
           this.file.readAsBinaryString(correctPath, currentName).then(response => {
             // var content = JSON.parse(response)
             // console.log(JSON.stringify(response))
@@ -157,9 +157,9 @@ export class RestorePage {
       let correctPath = 'file://' + urlFile.substr(0, urlFile.lastIndexOf('/') + 1);
       let currentName = urlFile.substring(urlFile.lastIndexOf('/') + 1);
       //&& currentName.substring(0, currentName.indexOf("--")) == 'nexty'
-      if (currentName.substring(currentName.lastIndexOf('.') + 1, currentName.length) == 'txt' && currentName.indexOf('--') > -1&&currentName.indexOf('nexty')>-1) {
+      if (currentName.substring(currentName.lastIndexOf('.') + 1, currentName.length) == 'txt' && currentName.indexOf('nexty') > -1) {
         console.log("correctPath: " + correctPath, "currentName: " + currentName);
-        this.file.readAsText(correctPath, currentName).then(response => {
+        this.file.readAsBinaryString(correctPath, currentName).then(response => {
           console.log(response);
           if (response != null || response != '') {
             this.code = response;
