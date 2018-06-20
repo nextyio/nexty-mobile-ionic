@@ -1,3 +1,10 @@
 page-restore {
-
+    @media (width: 320px) {
+        .item-ios {
+            font-size: 100% !important;
+        }
+        .item-md {
+            font-size: 100% !important;
+        }
+    }
 }

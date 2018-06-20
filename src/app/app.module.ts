@@ -45,6 +45,12 @@ import { FileChooser } from '@ionic-native/file-chooser';
 import { FilePath } from '@ionic-native/file-path';
 import { Network } from '@ionic-native/network';
 import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
+import { RedeemPage } from '../pages/redeem/redeem';
+import { FcmService } from '../services/fcm.service';
+import { Firebase } from '@ionic-native/firebase';
+import { DetailNotiPage } from '../pages/detail-noti/detail-noti';
+import { NotificationsPage } from '../pages/notifications/notifications';
+import { PrivateKeyPage } from '../pages/private-key/private-key';
 
 @NgModule({
   declarations: [
@@ -62,7 +68,11 @@ import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
     HistoryPage,
     RequestPage,
     RestorePage,
-    SendPage
+    SendPage,
+    RedeemPage,
+    NotificationsPage,
+    DetailNotiPage,
+    PrivateKeyPage
   ],
   imports: [
     BrowserModule,
@@ -92,7 +102,11 @@ import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
     HistoryPage,
     RequestPage,
     RestorePage,
-    SendPage
+    SendPage,
+    RedeemPage,
+    NotificationsPage,
+    DetailNotiPage,
+    PrivateKeyPage
   ],
   providers: [
     StatusBar,
@@ -110,6 +124,7 @@ import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
     DetailService,
     BackupService,
     RestoreService,
+    FcmService,
 
     /* Other providers*/
     BarcodeScanner,
@@ -122,7 +137,8 @@ import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
     IOSFilePicker,
     FileChooser,
     FilePath,
-    Network
+    Network,
+    Firebase
   ]
 })
 export class AppModule {

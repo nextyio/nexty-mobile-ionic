@@ -1,0 +1,29 @@
+<!--
+  Generated template for the NotificationsPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>notifications</ion-title>
+    <ion-buttons right>
+      <button ion-button icon-only (click)="deleteAll()">
+        <ion-icon name="trash" style="font-size: 2em"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-list>
+    <ion-item *ngFor="let noti of listNoti" tappable (click)="goDetail(noti)">
+      <ion-icon name="{{noti.icon}}" item-start [color]="noti.status ? 'danger' : 'positive'"></ion-icon>
+      <h3 [ngStyle]="{'font-weight':noti.status ? 'bold' : '100'}">{{ noti.Title}}</h3>
+      <h4 [ngStyle]="{'font-weight':noti.status ? 'bold' : '100'}">{{ noti.content }}</h4>
+    </ion-item>
+  </ion-list>
+</ion-content>

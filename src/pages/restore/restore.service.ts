@@ -27,7 +27,7 @@ export class RestoreService {
         if (addr) {
           let privateKeyEncrypted = res['privateKeyEncrypted'];
           let privateKey = CryptoJS.AES.decrypt(privateKeyEncrypted, code).toString(CryptoJS.enc.Utf8);
-
+          console.log(privateKey)
           return this.authService.restore(addr, privateKey, password).mergeMap(() => Observable.of(0));
         }
         return Observable.of(1);

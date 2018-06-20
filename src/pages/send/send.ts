@@ -20,7 +20,8 @@ export class SendPage {
   isFocusedAddress: boolean
   ExtraData: string;
   public extraDataView: string;
-  constructor(public navCtrl: NavController, public navParams: NavParams,
+  constructor(public navCtrl: NavController,
+    public navParams: NavParams,
     private alertCtrl: AlertController,
     private loadingService: LoadingService,
     private barcodeScanner: BarcodeScanner,
@@ -128,9 +129,9 @@ export class SendPage {
           text: 'Send',
           handler: (data) => {
             if (extraData || extraData != null) {
-              this.doSend(bigInt(nty), data['password'], extraData)
+              this.doSend(nty, data['password'], extraData)
             } else {
-              this.doSend(bigInt(nty), data['password'])
+              this.doSend(nty, data['password'])
             }
           }
         }
@@ -140,6 +141,7 @@ export class SendPage {
   }
 
   doSend(nty, password: string, data?) {
+    console.log("type nty: " + typeof (nty))
     this.loadingService.showLoading();
     if (data != null || data != "" || data) {
       this.walletService.send(this.toAddress, nty, password, data).subscribe(

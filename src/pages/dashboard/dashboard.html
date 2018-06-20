@@ -4,7 +4,14 @@
       <ion-icon name='menu'></ion-icon>
     </button>
     <ion-title>Dashboard</ion-title>
+    <ion-buttons right>
+      <button ion-button icon-only (click)="notification()">
+        <ion-icon name="notifications" style="font-size: 2em"></ion-icon>
+        <div class="number-noti">99</div>
+      </button>
+    </ion-buttons>
   </ion-navbar>
+
   <ng2-slim-loading-bar></ng2-slim-loading-bar>
 </ion-header>
 

@@ -7,7 +7,7 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content>
   <div class="logo">
     <div class="logo-img">
       <img src="assets/imgs/logo-with-text.png" alt="Nexty logo">
@@ -15,13 +15,6 @@
   </div>
 
   <form [formGroup]="restoreForm">
-    <!-- <ion-item>
-      <ion-label floating>Restore code</ion-label>
-      <ion-input no-lines [formControl]="restoreForm.controls['code']" type="text" [(ngModel)]="code"></ion-input>
-    </ion-item>
-    <ion-item no-lines no-margin *ngIf="!restoreForm.controls.code.valid && restoreForm.controls.code.dirty" class="validator-error">
-      <ion-label color="danger">Please enter a valid address.</ion-label>
-    </ion-item> -->
     <ion-list style="margin-bottom: 0 !important;">
       <ion-row padding-horizontal align-items-end>
         <ion-col no-padding>
@@ -38,15 +31,16 @@
       </ion-row>
 
     </ion-list>
-    <ion-item>
+    <ion-item padding-horizontal>
       <ion-label floating>Local passcode</ion-label>
       <ion-input no-lines [formControl]="restoreForm.controls['password']" type="password"></ion-input>
     </ion-item>
 
-    <ion-item>
+    <ion-item padding-horizontal>
       <ion-label floating>Confirm local passcode</ion-label>
       <ion-input no-lines [formControl]="restoreForm.controls['confirmPassword']" type="password" [(ngModel)]="confirmPassword"></ion-input>
     </ion-item>
+
     <ion-item no-lines no-margin *ngIf="restoreForm.controls.password.valid && restoreForm.controls.confirmPassword.errors?.MatchPassword"
       class="validator-error">
       <ion-label color="danger">Local passcode not match</ion-label>

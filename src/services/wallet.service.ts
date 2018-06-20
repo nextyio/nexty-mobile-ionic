@@ -31,6 +31,7 @@ export class WalletService {
     ).map(value => {
       if (value >= 0) {
         this.balance = value;
+        // console.log("balance: " + this.balance);
       } else {
         this.balance = 0;
       }

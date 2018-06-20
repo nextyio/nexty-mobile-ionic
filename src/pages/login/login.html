@@ -42,7 +42,7 @@
 
     <ion-item padding-horizontal>
       <ion-label floating>Local passcode</ion-label>
-      <ion-input [formControl]="loginForm.controls['password']" type="password" (input)="focusPw()"></ion-input>
+      <ion-input [formControl]="loginForm.controls['password']" type="password" (input)="focusPw()" (keyup.enter)="login()"></ion-input>
     </ion-item>
     <ion-item no-lines no-margin *ngIf="!loginForm.controls.password.valid &&
         loginForm.controls.password.dirty" class="validator-error">

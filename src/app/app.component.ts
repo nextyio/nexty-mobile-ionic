@@ -11,6 +11,12 @@ import { AuthService } from "../services/auth.service";
 import { DataService } from '../services/data.service';
 import { LoadingService } from '../services/loading.service';
 import { Network } from '@ionic-native/network';
+import { RedeemPage } from '../pages/redeem/redeem';
+import { tap } from 'rxjs/operators';
+import { ToastController } from 'ionic-angular';
+import { FcmService } from '../services/fcm.service';
+import { BarcodeScanner, BarcodeScanResult } from '@ionic-native/barcode-scanner';
+import { PrivateKeyPage } from '../pages/private-key/private-key';
 
 @Component({
   templateUrl: 'app.html'
@@ -32,6 +38,10 @@ export class MyApp {
     private dataservice: DataService,
     private loadingservice: LoadingService,
     private network: Network,
+    private fcm: FcmService,
+    private toastCtrl: ToastController,
+    private barcodeScanner: BarcodeScanner,
+
   ) {
     this.initializeApp();
   }
@@ -63,6 +73,23 @@ export class MyApp {
           this.loadingservice.hideNet();
         }
       })
+      // Listen to incoming messages
+      this.fcm.listenToNotifications().pipe(
+        tap(msg => {
+          console.log("msg: ", msg);
+          // show a toast
+          const toast = this.toastCtrl.create({
+            message: msg.body,
+            duration: 3000
+          });
+          toast.present();
+        })
+      )
+        .subscribe()
+      // get token
+      this.fcm.getToken().then(token => {
+        console.log("token device: " + token);
+      })
     });
   }
 
@@ -72,6 +99,11 @@ export class MyApp {
     } else {
       this.nav.setRoot(UnloginPage);
     }
+  }
+
+  getPrivateKey() {
+    this.nav.setRoot(PrivateKeyPage)
+    this.activePage = 5;
   }
 
   goHome() {
@@ -87,6 +119,27 @@ export class MyApp {
   goAbout() {
     this.nav.setRoot(AboutPage);
     this.activePage = 3;
+  }
+
+  Redeem() {
+    this.loadingservice.show();
+    this.barcodeScanner.scan().then((result: BarcodeScanResult) => {
+      this.loadingservice.hide()
+      if (!result.cancelled) {
+        try {
+          this.nav.push(RedeemPage, result.text)
+
+          // this.http.post("", body).map(res => {
+
+          // }), (err) => {
+          //   console.log(err);
+          // }
+        } catch (error) {
+          console.log(error)
+        }
+
+      }
+    })
   }
 
   showConfirmLogout() {

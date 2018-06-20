@@ -9,6 +9,18 @@
           </ion-avatar>
           <span>Nexty wallet</span>
         </button>
+        <button ion-item menuClose tappable (click)="Redeem()" no-lines [class.active]="activePage==4">
+          <ion-avatar item-left>
+            <ion-icon padding-horizontal name="md-cash"></ion-icon>
+          </ion-avatar>
+          <span>Redeem</span>
+        </button>
+        <button ion-item menuClose tappable (click)="getPrivateKey()" no-lines [class.active]="activePage==5">
+          <ion-avatar item-left>
+            <ion-icon padding-horizontal name="key"></ion-icon>
+          </ion-avatar>
+          <span>Private key</span>
+        </button>
         <button ion-item menuClose tappable (click)="goSetting()" no-lines [class.active]="activePage==2">
           <ion-avatar item-left>
             <ion-icon padding-horizontal name="settings"></ion-icon>

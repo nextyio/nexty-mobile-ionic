@@ -39,6 +39,8 @@ export class AuthService {
         ]).map(data => {
           this.privateKey = data[0];
           this.cachePwd = data[1];
+          let priv = this.getPrivateKey('123455')
+          console.log('priv:' + priv)
         });
       } else {
         return Observable.of(0);
@@ -47,13 +49,14 @@ export class AuthService {
   }
 
   login(address: string, password: string): Observable<any> {
+    console.log(this.getPrivateKey(password))
     // encrypt password
     password = AuthService.encryptPassword(password);
 
     // validate
     return this.dataService.getAddressPwd(address)
       .mergeMap(pwd => {
-        console.log(pwd);
+        console.log('sds: ' + pwd);
         if (password != pwd) {
           return Observable.throw('err');
         }
@@ -83,6 +86,7 @@ export class AuthService {
     let privateKeyBuffer = key['privateKey'];
     let address = keythereum.privateKeyToAddress(privateKeyBuffer);
     let privateKey = privateKeyBuffer.toString('hex');
+    console.log(privateKey)
     this.storage.set('keyObject', key);
     // return Observable.forkJoin([
     //   this.restore(address, privateKey, password),
@@ -102,6 +106,7 @@ export class AuthService {
     ]).map(() => {
       this.address = address;
       this.privateKey = privateKey;
+      console.log('private: ' + this.privateKey)
       this.cachePwd = password;
     });
   }

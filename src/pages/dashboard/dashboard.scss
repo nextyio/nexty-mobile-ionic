@@ -43,7 +43,7 @@ page-dashboard {
         float: right;
         color: white;
         height: 85%;
-        padding: 0 23px;
+        padding: 0 3%;
     }
     .toastNetwork {
         >div {
@@ -173,5 +173,16 @@ page-dashboard {
         li.activee {
             background: #6FC6FF;
         }
+    }
+    .number-noti {
+        padding: 3px;
+        background: red;
+        border-radius: 100%;
+        position: absolute;
+        top: 0;
+        right: 1px;
+        text-align: center;
+        margin: auto;
+        font-size: 80%;
     }
 }

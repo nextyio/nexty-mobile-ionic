@@ -10,7 +10,7 @@
 </ion-header>
 
 
-<ion-content no-bounce padding>
+<ion-content no-bounce>
 
   <ion-list>
     <ion-row align-items-end>
@@ -62,11 +62,11 @@
     </ion-item> -->
     <p color="danger" *ngIf="!checkQRcode">Extra data: {{extraDataView}}</p>
 
-    <ion-item no-lines text-center>
+    <ion-item no-lines text-center no-margin>
       <button style="margin-bottom: 0 !important;" class="normal-button" ion-button color="secondary" [disabled]="ntyValue == 0 || toAddress == ''||toAddress==null ||!isValidPNTY()"
         (click)="send()">Send</button>
     </ion-item>
-    <ion-item text-center *ngIf="!checkQRcode">
+    <ion-item text-center *ngIf="!checkQRcode" no-margin>
       <button style="margin-top: 0 !important;" class="normal-button" ion-button color="primary" (click)="cancel()">Cancel</button>
     </ion-item>
   </ion-list>

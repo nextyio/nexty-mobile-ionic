@@ -14,6 +14,7 @@ import 'rxjs/add/operator/timeout';
 import 'rxjs/add/operator/delay';
 import 'rxjs/add/operator/map';
 import { Network } from '@ionic-native/network';
+import { NotificationsPage } from '../notifications/notifications';
 declare var CanvasJS;
 
 /**
@@ -99,18 +100,19 @@ export class DashboardPage implements OnDestroy {
       }
         break;
     }
-    this.http.get(url).timeout(5000)
-      .subscribe(res => {
-        this.TimeOut = false
-        this.datachart = res;
-        // console.log('Get data chart success: ', this.datachart);
-        this.loadchart();
-      })
-    setTimeout(() => {
-      if (this.TimeOut == true) {
-        console.log()
-      }
-    }, 5000);
+    try {
+      this.http.get(url)
+        .subscribe(res => {
+          this.TimeOut = false
+          this.datachart = res;
+          // console.log('Get data chart success: ', this.datachart);
+          this.loadchart();
+        })
+    } catch (error) {
+      console.log('e' + error);
+    }
+
+
   }
 
 
@@ -153,7 +155,8 @@ export class DashboardPage implements OnDestroy {
   }
 
   get balance(): number {
-    return Math.round(this.walletService.balance / Constants.BASE_NTY);
+    var a = parseFloat((this.walletService.balance / Constants.BASE_NTY).toFixed(3))
+    return a;
   }
   updateGraph() {
     let data = [];
@@ -298,5 +301,8 @@ export class DashboardPage implements OnDestroy {
       //   })
     }
     updateChart();
+  }
+  notification() {
+    this.navCtrl.push(NotificationsPage)
   }
 }
