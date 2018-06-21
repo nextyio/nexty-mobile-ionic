@@ -39,7 +39,7 @@ export class PrivateKeyPage {
 
   getPrivateKey() {
     let alert = this.alertCtrl.create({
-      title: 'Confirm get private key',
+      title: 'Retrieve your private key',
       message: 'Enter your local passcode to process',
       inputs: [
         {
