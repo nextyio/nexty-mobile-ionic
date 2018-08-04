@@ -17,6 +17,8 @@ import { ToastController } from 'ionic-angular';
 import { FcmService } from '../services/fcm.service';
 import { BarcodeScanner, BarcodeScanResult } from '@ionic-native/barcode-scanner';
 import { PrivateKeyPage } from '../pages/private-key/private-key';
+import { SmartContractPage } from '../pages/smart-contract/smart-contract';
+import { HistoryPage } from '../pages/history/history';
 
 @Component({
   templateUrl: 'app.html'
@@ -26,6 +28,8 @@ export class MyApp {
 
   rootPage: any;
   activePage: number = 1;
+
+  activeAddToken: boolean = false;
 
   pages: Array<{ title: string, component: any }>;
 
@@ -73,6 +77,7 @@ export class MyApp {
           this.loadingservice.hideNet();
         }
       })
+      this.showAddToken()
       // Listen to incoming messages
       this.fcm.listenToNotifications().pipe(
         tap(msg => {
@@ -93,6 +98,23 @@ export class MyApp {
     });
   }
 
+
+  showAddToken() {
+    try {
+      this.fcm.showAddToken()
+        .subscribe(status => {
+          if (status) {
+            this.activeAddToken = status.value;
+          } else {
+            this.activeAddToken = false;
+          }
+        })
+    } catch (error) {
+      this.activeAddToken = false;
+    }
+
+  }
+
   checkAuth() {
     if (this.authService.isAuth) {
       this.goHome();
@@ -104,6 +126,20 @@ export class MyApp {
   getPrivateKey() {
     this.nav.setRoot(PrivateKeyPage)
     this.activePage = 5;
+  }
+
+  goSmartContract() {
+    if (this.activeAddToken == true) {
+      this.nav.setRoot(SmartContractPage);
+      this.activePage = 6
+    } else {
+      let toast = this.toastCtrl.create({
+        message: 'This feature is coming soon',
+        duration: 3000,
+      });
+      toast.present();
+    }
+
   }
 
   goHome() {
@@ -120,6 +156,10 @@ export class MyApp {
     this.nav.setRoot(AboutPage);
     this.activePage = 3;
   }
+  goHistory(): void {
+    this.nav.setRoot(HistoryPage)
+    this.activePage = 7;
+  }
 
   Redeem() {
     this.loadingservice.show();
@@ -128,12 +168,6 @@ export class MyApp {
       if (!result.cancelled) {
         try {
           this.nav.push(RedeemPage, result.text)
-
-          // this.http.post("", body).map(res => {
-
-          // }), (err) => {
-          //   console.log(err);
-          // }
         } catch (error) {
           console.log(error)
         }

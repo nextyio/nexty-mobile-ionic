@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { AlertController, MenuController, NavController, NavParams, Platform } from 'ionic-angular';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { AbstractControl, FormBuilder, FormGroup, Validators, Form } from "@angular/forms";
 import { HomePage } from "../home/home";
 import { RestoreService } from "./restore.service";
 import { LoadingService } from "../../services/loading.service";
@@ -22,12 +22,14 @@ import { File } from '@ionic-native/file';
   templateUrl: 'restore.html',
 })
 export class RestorePage {
-
+  restoreFormPvK: FormGroup;
   restoreForm: FormGroup;
   code: string;
   password: string;
   confirmPassword: string;
+  privateKey: string
   public urlFile
+  TypeRestore = "bkCode"
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -48,7 +50,18 @@ export class RestorePage {
         Validators.pattern(Constants.PASSWORD_PATTERN),
         Validators.required
       ])],
-      'confirmPassword': ['', Validators.required]
+      'confirmPassword': ['', Validators.required],
+    }, {
+        validator: this.matchPassword
+      });
+
+    this.restoreFormPvK = this.formBuilder.group({
+      'privateKey': ['', Validators.required],
+      'password': ['', Validators.compose([
+        Validators.pattern(Constants.PASSWORD_PATTERN),
+        Validators.required
+      ])],
+      'confirmPassword': ['', Validators.required],
     }, {
         validator: this.matchPassword
       });
@@ -56,8 +69,10 @@ export class RestorePage {
 
   ionViewDidLoad() {
     this.code = '';
+    this.privateKey = '';
     this.password = '';
     this.restoreForm.reset();
+    this.restoreFormPvK.reset();
   }
 
 
@@ -100,6 +115,47 @@ export class RestorePage {
           alert.present();
         }
       });
+    }
+  }
+  restorePvK() {
+    if ((this.restoreFormPvK.controls['privateKey'].value).toString().length != 64) {
+      let alert = this.alertCtrl.create({
+        title: 'Invalid private key, please try again!',
+        buttons: [{
+          text: 'OK',
+          handler: () => {
+            this.ionViewDidLoad();
+          }
+        }]
+      });
+      alert.present();
+      return;
+    }
+
+    if (this.restoreFormPvK.valid) {
+      this.privateKey = this.restoreFormPvK.controls['privateKey'].value;
+      this.password = this.restoreFormPvK.controls['password'].value;
+
+      this.loadingService.showLoading();
+      this.service.restorePvK(this.privateKey, this.password)
+        .subscribe((rCode) => {
+          this.loadingService.hideloading();
+          if (rCode == 0) {
+            this.menuCtrl.enable(true, 'main-menu');
+            this.navCtrl.setRoot(HomePage);
+          } else {
+            let alert = this.alertCtrl.create({
+              title: 'Invalid Private key, please try again!',
+              buttons: [{
+                text: 'OK',
+                handler: () => {
+                  this.ionViewDidLoad();
+                }
+              }]
+            });
+            alert.present();
+          }
+        });
     }
   }
 
@@ -173,5 +229,13 @@ export class RestorePage {
         this.loadingService.showToat('Please select a valid backup file')
       }
     }
+  }
+  segmentChanged(item) {
+    console.log(item.value)
+    this.code = '';
+    this.privateKey = '';
+    this.password = '';
+    this.restoreForm.reset();
+    this.restoreFormPvK.reset();
   }
 }

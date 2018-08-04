@@ -1,9 +1,14 @@
 page-register {
-  .logo {
-    margin-top: 20px;
-  }
-
-  p {
-    font-family: Poppins;
-  }
+    .logo {
+        margin-top: 20px;
+    }
+    p {
+        font-family: Poppins;
+    }
+    @media (max-width:386px) {
+        .error {
+            overflow: unset !important;
+            white-space: inherit !important;
+        }
+    }
 }

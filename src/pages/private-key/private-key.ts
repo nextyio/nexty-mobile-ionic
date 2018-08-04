@@ -89,6 +89,7 @@ export class PrivateKeyPage {
 
       } else {
         this.PrivateKey = this.authService.getPrivateKey(passcode);
+        console.log(this.PrivateKey)
       }
     } catch (error) {
       let alert = this.alertCtrl.create({

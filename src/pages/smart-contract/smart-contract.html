@@ -1,0 +1,63 @@
+<!--
+  Generated template for the SmartContractPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar color="nexty">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Smart contract</ion-title>
+  </ion-navbar>
+  <ng2-slim-loading-bar></ng2-slim-loading-bar>
+</ion-header>
+
+
+<ion-content padding>
+  <ion-list aling-items-end no-margin>
+    <ion-row>
+      <ion-col>
+        <ion-item no-padding>
+          <ion-label floating>Enter token contract address</ion-label>
+          <ion-input type="text" [(ngModel)]="SmartContract" (focusout)="getInfo()"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <ion-item no-padding>
+          <ion-label floating>Token symbol</ion-label>
+          <ion-input type="text" [(ngModel)]="TokenSymbol" readonly="true"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="false">
+      <ion-col>
+        <ion-item no-padding>
+          <ion-label floating>Decimals</ion-label>
+          <ion-input type="text" [(ngModel)]="TokenDecimals"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-item no-lines no-margin *ngIf="tokenExist" class="validator-error">
+      <ion-label color="danger">Token contract address has already existed</ion-label>
+    </ion-item>
+    <ion-item no-lines no-margin *ngIf="TokenValid" class="validator-error">
+      <ion-label color="danger">Token contract address is invalid</ion-label>
+    </ion-item>
+  </ion-list>
+  <ion-item no-margin text-center no-lines>
+    <button class="normal-button" ion-button color="secondary" (click)="AddToken()" [disabled]="SmartContract == null || SmartContract == '' || TokenSymbol == null || TokenSymbol == '' || TokenValid">Add token</button>
+  </ion-item>
+  <ion-item no-margin text-center no-lines *ngIf="false">
+    <button class="normal-button" ion-button color="secondary" (click)="clearCache()">Clear All Token</button>
+  </ion-item>
+  <ion-item no-margin text-center no-lines *ngIf="false">
+    <button class="normal-button" ion-button color="secondary" (click)="multilToken()" [disabled]="SmartContract == null || SmartContract == '' || TokenSymbol == null || TokenSymbol == ''">Test Multi Token</button>
+  </ion-item>
+</ion-content>

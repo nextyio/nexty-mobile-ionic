@@ -2,37 +2,56 @@
 
   <ion-content>
     <div class="menu-content">
-      <ion-list color="primary">
+      <ion-list color="nexty">
         <button ion-item menuClose tappable (click)="goHome()" no-lines [class.active]="activePage==1">
           <ion-avatar item-left>
             <img src="assets/imgs/logo-without-text.png">
           </ion-avatar>
           <span>Nexty wallet</span>
         </button>
+
         <button ion-item menuClose tappable (click)="Redeem()" no-lines [class.active]="activePage==4">
           <ion-avatar item-left>
             <ion-icon padding-horizontal name="md-cash"></ion-icon>
           </ion-avatar>
           <span>Redeem</span>
         </button>
+
         <button ion-item menuClose tappable (click)="getPrivateKey()" no-lines [class.active]="activePage==5">
           <ion-avatar item-left>
             <ion-icon padding-horizontal name="key"></ion-icon>
           </ion-avatar>
           <span>Private key</span>
         </button>
+
+        <button ion-item menuClose tappable (click)="goSmartContract()" no-lines [class.active]="activePage==6">
+          <ion-avatar item-left>
+            <ion-icon padding-horizontal name="document"></ion-icon>
+          </ion-avatar>
+          <span>Add token</span>
+        </button>
+
+        <button ion-item menuClose tappable (click)="goHistory()" no-lines [class.active]="activePage==7">
+          <ion-avatar item-left>
+            <ion-icon padding-horizontal name="swap"></ion-icon>
+          </ion-avatar>
+          <span>History</span>
+        </button>
+
         <button ion-item menuClose tappable (click)="goSetting()" no-lines [class.active]="activePage==2">
           <ion-avatar item-left>
             <ion-icon padding-horizontal name="settings"></ion-icon>
           </ion-avatar>
           <span>Settings</span>
         </button>
+
         <button ion-item menuClose tappable (click)="goAbout()" no-lines [class.active]="activePage==3">
           <ion-avatar item-left>
             <ion-icon padding-horizontal name="information-circle"></ion-icon>
           </ion-avatar>
           <span>About</span>
         </button>
+
         <button ion-item menuClose tappable (click)="showConfirmLogout()" no-lines>
           <ion-avatar item-left>
             <ion-icon padding-horizontal name="log-out"></ion-icon>

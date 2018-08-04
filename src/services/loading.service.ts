@@ -1,4 +1,4 @@
-import { LoadingController } from 'ionic-angular';
+import { LoadingController, AlertController } from 'ionic-angular';
 import { Injectable } from '@angular/core';
 import { ToastController } from 'ionic-angular';
 import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
@@ -11,7 +11,8 @@ export class LoadingService {
   constructor(
     private loadingCtrl: LoadingController,
     private toastCtrl: ToastController,
-    private loadingBar: SlimLoadingBarService
+    private loadingBar: SlimLoadingBarService,
+    private alertCtrl: AlertController
   ) {
   }
 
@@ -57,5 +58,19 @@ export class LoadingService {
   }
   hideloading() {
     this.loadingBar.complete();
+  }
+
+  alert(errMsg) {
+    let alert = this.alertCtrl.create({
+      title: 'Error',
+      message: errMsg,
+      buttons: [
+        {
+          text: 'Ok',
+          role: 'cancel'
+        }
+      ]
+    });
+    alert.present();
   }
 }

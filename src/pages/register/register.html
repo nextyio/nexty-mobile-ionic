@@ -1,6 +1,6 @@
 <ion-header>
 
-  <ion-navbar color="primary">
+  <ion-navbar color="nexty">
     <ion-title>Create Wallet</ion-title>
   </ion-navbar>
 
@@ -21,7 +21,7 @@
     </ion-item>
     <ion-item no-lines no-margin *ngIf="!registerForm.controls.password.valid &&
         registerForm.controls.password.dirty" class="validator-error">
-      <ion-label color="danger">
+      <ion-label color="danger" class="error">
         Local passcode needs at least 6 character
       </ion-label>
     </ion-item>
@@ -41,7 +41,7 @@
       <a (click)="viewToS()">Term of Service</a>
     </p>
 
-    <ion-item no-lines text-center>
+    <ion-item no-lines text-center no-padding>
       <button class="normal-button" ion-button color="secondary" [disabled]="!registerForm.valid" (click)="register()">Create Wallet</button>
     </ion-item>
   </form>

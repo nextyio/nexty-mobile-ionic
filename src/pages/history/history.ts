@@ -43,7 +43,8 @@ export class HistoryPage {
 
   getItems(ev) {
     // Reset items back to all of the items
-    this.transactions = this.getFullTransaction();
+    // this.transactions = this.getFullTransaction();
+
 
     // set val to the value of the ev target
     let val = ev.target.value;
@@ -51,8 +52,17 @@ export class HistoryPage {
     // if the value is an empty string don't filter the items
     if (val && val.trim() != '') {
       this.transactions = this.transactions.filter((transaction) => {
+        console.log("transaction: " + JSON.stringify(transaction))
+        console.log("aaa: " + (transaction.quantity.toLowerCase().indexOf(val.toLowerCase()) > -1))
         return (transaction.quantity.toLowerCase().indexOf(val.toLowerCase()) > -1);
       })
+    } else {
+      this.service.getData().finally(() => {
+        this.loadingService.hideloading();
+      }).subscribe(() => {
+        this.transactions = this.getFullTransaction();
+        this.index = this.transactions.length;
+      });
     }
   }
 
@@ -60,7 +70,7 @@ export class HistoryPage {
     let transactions = [];
     for (let entry of this.service.historyData) {
       let type = 'up';
-      if (entry.to == this.authService.address) {
+      if (entry.to.toLowerCase() == this.authService.address.toLowerCase()) {
         type = 'down';
       }
       let transaction = new Transaction();
@@ -81,9 +91,13 @@ export class HistoryPage {
   }
 
   doInfinite(infiniteScroll) {
+    console.log("index: " + this.index, length)
     this.service.getData(this.index, length).finally(() => {
     }).subscribe(() => {
-      this.transactions = this.getFullTransaction();
+      this.getFullTransaction().forEach(element => {
+        this.transactions.push(element)
+      });
+      // this.transactions = this.getFullTransaction();
       this.index = this.transactions.length;
       infiniteScroll.complete();
     })

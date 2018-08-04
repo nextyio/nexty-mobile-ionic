@@ -3,7 +3,8 @@ export class Constants {
 
   /* static */
   static readonly SERVICE_API = 'https://app.nexty.io';
-  static readonly WEB3_API = 'http://13.228.68.50:8545';
+  static readonly WEB3_API = 'http://125.212.250.61:11111';
+  // static readonly WEB3_API = 'http://13.228.68.50:8545';
   static readonly EXPLORER_API = 'https://explorer.nexty.io';
   static readonly WALLET_API = 'https://dev-wallet.nexty.io';
   static readonly BASE_PNTY = Math.pow(10, 22);
@@ -23,5 +24,6 @@ export class Constants {
   static readonly COINMARKETCAP = 'https://graphs2.coinmarketcap.com/currencies/nexty/';
   static readonly WEEK = 653600000;
   static readonly DAY = 86400000;
+  static readonly MONTH = 2678400000;
   static readonly GETUSD = 'https://api.coinmarketcap.com/v2/ticker/2714/';
 }

@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Firebase } from '@ionic-native/firebase';
 import { Platform } from 'ionic-angular';
+import { Observable } from "rxjs/Observable";
+import 'rxjs/add/observable/throw';
 /*
   Generated class for the FcmProvider provider.
 
@@ -17,6 +19,7 @@ export class FcmService {
     public platform: Platform
   ) {
     console.log('Hello FcmProvider Provider');
+    this.showAddToken();
   }
   async getToken() {
     let token;
@@ -33,5 +36,15 @@ export class FcmService {
   }
   listenToNotifications() {
     return this.firebaseNative.onNotificationOpen()
+  }
+  showAddToken(): Observable<any> {
+    return this.http.get("https://api.nexty.io/api/wallet/showtoken")
+      .map(data => {
+        return Observable.of(data)
+      })
+      .catch((error: Response) => {
+        console.log(error)
+        return Observable.of(false)
+      })
   }
 }

@@ -1,6 +1,6 @@
 <ion-header>
 
-  <ion-navbar color="primary">
+  <ion-navbar color="nexty">
     <ion-title>Restore Wallet</ion-title>
   </ion-navbar>
   <ng2-slim-loading-bar></ng2-slim-loading-bar>
@@ -13,47 +13,102 @@
       <img src="assets/imgs/logo-with-text.png" alt="Nexty logo">
     </div>
   </div>
+  <!-- segment -->
+  <ion-segment [(ngModel)]="TypeRestore" color="primary" (ionChange)="segmentChanged($event)" margin-bottom>
+    <ion-segment-button value="bkCode">
+      Backup code
+    </ion-segment-button>
+    <ion-segment-button value="PvKey">
+      Private key
+    </ion-segment-button>
+  </ion-segment>
 
-  <form [formGroup]="restoreForm">
-    <ion-list style="margin-bottom: 0 !important;">
-      <ion-row padding-horizontal align-items-end>
-        <ion-col no-padding>
-          <ion-item col-12 no-padding>
-            <ion-label floating>Backup code/Choose file</ion-label>
-            <ion-input [formControl]="restoreForm.controls['code']" type="text" [(ngModel)]="code"></ion-input>
-          </ion-item>
-        </ion-col>
-        <ion-col col-auto>
-          <button class="chooser-button" ion-button icon-only (click)="chooserFile()">
-            <ion-icon name="ios-folder" style="color: rgb(170, 170, 27)"></ion-icon>
-          </button>
-        </ion-col>
-      </ion-row>
 
-    </ion-list>
-    <ion-item padding-horizontal>
-      <ion-label floating>Local passcode</ion-label>
-      <ion-input no-lines [formControl]="restoreForm.controls['password']" type="password"></ion-input>
-    </ion-item>
+  <div [ngSwitch]="TypeRestore">
+    <!-- Form restore by backup code-->
+    <form [formGroup]="restoreForm" *ngSwitchCase="'bkCode'">
+      <ion-list style="margin-bottom: 0 !important">
+        <ion-row padding-horizontal align-items-end>
+          <ion-col no-padding>
+            <ion-item col-12 no-padding>
+              <ion-label floating>Backup code/Choose file</ion-label>
+              <ion-input [formControl]="restoreForm.controls['code']" type="text" [(ngModel)]="code"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col col-auto>
+            <button class="chooser-button" ion-button icon-only (click)="chooserFile()">
+              <ion-icon name="ios-folder" style="color: rgb(170, 170, 27)"></ion-icon>
+            </button>
+          </ion-col>
+        </ion-row>
+      </ion-list>
 
-    <ion-item padding-horizontal>
-      <ion-label floating>Confirm local passcode</ion-label>
-      <ion-input no-lines [formControl]="restoreForm.controls['confirmPassword']" type="password" [(ngModel)]="confirmPassword"></ion-input>
-    </ion-item>
+      <ion-item padding-horizontal>
+        <ion-label floating>Local passcode</ion-label>
+        <ion-input no-lines [formControl]="restoreForm.controls['password']" type="password"></ion-input>
+      </ion-item>
 
-    <ion-item no-lines no-margin *ngIf="restoreForm.controls.password.valid && restoreForm.controls.confirmPassword.errors?.MatchPassword"
-      class="validator-error">
-      <ion-label color="danger">Local passcode not match</ion-label>
-    </ion-item>
-    <ion-item no-lines no-margin *ngIf="!restoreForm.controls.password.valid && restoreForm.controls.password.dirty" class="validator-error">
-      <ion-label color="danger">Please enter a valid local passcode.</ion-label>
-    </ion-item>
-    <ion-item no-lines no-margin *ngIf="!restoreForm.controls.code.valid && restoreForm.controls.code.dirty" class="validator-error">
-      <ion-label color="danger">Please enter a valid address.</ion-label>
-    </ion-item>
+      <ion-item padding-horizontal>
+        <ion-label floating>Confirm local passcode</ion-label>
+        <ion-input no-lines [formControl]="restoreForm.controls['confirmPassword']" type="password" [(ngModel)]="confirmPassword"></ion-input>
+      </ion-item>
 
-    <ion-item no-lines text-center>
-      <button class="normal-button" ion-button color="primary" [disabled]="!restoreForm.valid" (click)="restore()">Continue</button>
-    </ion-item>
-  </form>
+      <ion-item no-lines no-margin *ngIf="restoreForm.controls.password.valid && restoreForm.controls.confirmPassword.errors?.MatchPassword"
+        class="validator-error">
+        <ion-label color="danger">Local passcode not match</ion-label>
+      </ion-item>
+      <ion-item no-lines no-margin *ngIf="!restoreForm.controls.password.valid && restoreForm.controls.password.dirty" class="validator-error">
+        <ion-label color="danger">Please enter a valid local passcode.</ion-label>
+      </ion-item>
+      <ion-item no-lines no-margin *ngIf="!restoreForm.controls.code.valid && restoreForm.controls.code.dirty" class="validator-error">
+        <ion-label color="danger">Please enter a valid address.</ion-label>
+      </ion-item>
+
+      <ion-item no-lines text-center>
+        <button class="normal-button" ion-button color="nexty" [disabled]="!restoreForm.valid" (click)="restore()">Continue</button>
+      </ion-item>
+    </form>
+
+    <!-- Form restore by private key -->
+    <form [formGroup]="restoreFormPvK" *ngSwitchCase="'PvKey'">
+      <ion-list style="margin-bottom: 0 !important">
+        <ion-row padding-horizontal align-items-end>
+          <ion-col no-padding>
+            <ion-item no-padding>
+              <ion-label floating>Private key</ion-label>
+              <ion-input [formControl]="restoreFormPvK.controls['privateKey']" type="text" [(ngModel)]="code"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-list>
+
+      <ion-item padding-horizontal>
+        <ion-label floating>Local passcode</ion-label>
+        <ion-input no-lines [formControl]="restoreFormPvK.controls['password']" type="password"></ion-input>
+      </ion-item>
+
+      <ion-item padding-horizontal>
+        <ion-label floating>Confirm local passcode</ion-label>
+        <ion-input no-lines [formControl]="restoreFormPvK.controls['confirmPassword']" type="password" [(ngModel)]="confirmPassword"></ion-input>
+      </ion-item>
+
+      <ion-item no-lines no-margin *ngIf="restoreFormPvK.controls.password.valid && restoreFormPvK.controls.confirmPassword.errors?.MatchPassword"
+        class="validator-error">
+        <ion-label color="danger">Local passcode not match</ion-label>
+      </ion-item>
+      <ion-item no-lines no-margin *ngIf="!restoreFormPvK.controls.password.valid && restoreFormPvK.controls.password.dirty" class="validator-error">
+        <ion-label color="danger">Please enter a valid local passcode.</ion-label>
+      </ion-item>
+      <ion-item no-lines no-margin *ngIf="!restoreFormPvK.controls.privateKey.valid && restoreFormPvK.controls.privateKey.dirty"
+        class="validator-error">
+        <ion-label color="danger">Please enter a valid private key.</ion-label>
+      </ion-item>
+
+      <ion-item no-lines text-center>
+        <button class="normal-button" ion-button color="nexty" [disabled]="!restoreFormPvK.valid" (click)="restorePvK()">Continue</button>
+      </ion-item>
+
+    </form>
+  </div>
+
 </ion-content>

@@ -6,10 +6,9 @@ page-redeem {
     }
     #form {
         height: 100%;
-        width: 100%; // background-image: url('/assets/imgs/bg.jpg'); 
-        background-image: url("https://preview.ibb.co/jrRJAJ/preview_332678_S6dt_S1_Gpn_0015.jpg");
-        background-repeat: no-repeat;
-        background-size: cover;
+        width: 100%; //background-image: url('./../assets/imgs/bgRedeem.jpg'); // background-image: url("https://preview.ibb.co/jrRJAJ/preview_332678_S6dt_S1_Gpn_0015.jpg");
+        //background-repeat: no-repeat;
+        //background-size: cover;
         padding: 42% 9%;
     }
     .formSuccess {
@@ -17,8 +16,7 @@ page-redeem {
         background: white;
         padding: 9% 0;
         border-radius: 3%;
-        font-family: Poppins;
-        opacity: 0.8;
+        font-family: Poppins; // opacity: 0.8;        
         font-size: 120%;
         text-align: center;
     }

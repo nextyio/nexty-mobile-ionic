@@ -1,6 +1,6 @@
 <ion-header>
 
-  <ion-navbar color="primary">
+  <ion-navbar color="nexty">
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
@@ -13,6 +13,12 @@
 <ion-content no-bounce>
 
   <ion-list>
+    <ion-row align-item *ngIf="activeAddToken">
+      <ion-col align-item text-center>
+        <button ion-button style=" width: 99.4%; border: 1px solid black;" (click)="presentPopover($event)">Select token</button>
+      </ion-col>
+    </ion-row>
+    <!-- <ion-label>Receiver</ion-label> -->
     <ion-row align-items-end>
       <ion-col>
         <ion-item no-padding>
@@ -32,11 +38,29 @@
       </ion-label>
     </ion-item>
 
+    <!-- <ion-label>Token</ion-label>
+    <ion-row align-items>
+      <ion-col style="padding-right: 0">
+        <ion-item no-margin no-padding style="border-bottom: 1px solid #dedede;">
+          <ion-label class="ttl-Token">Select token</ion-label>
+        </ion-item>
+      </ion-col>
+      <ion-col style="padding-left: 0">
+        <ion-item no-margin no-padding style="border-bottom: 1px solid #dedede;">
+          <ion-label (click)="presentPopover($event)" class="btn_contract">{{Contract.symbol}}
+            <ion-icon name="ios-arrow-down" style="float: right; margin-right: 2%"></ion-icon>
+          </ion-label>
+        </ion-item>
+      </ion-col>
+    </ion-row> -->
+
+
     <!--Conversation-->
+    <!-- <ion-label>Amount</ion-label> -->
     <ion-row align-items-end>
       <ion-col>
         <ion-item no-padding>
-          <ion-label floating>NTY</ion-label>
+          <ion-label floating>{{Contract.symbol}}</ion-label>
           <ion-input type="number" (ionFocus)="focusPNTY()" [(ngModel)]="nty" [disabled]="!checkQRcode"></ion-input>
         </ion-item>
       </ion-col>
@@ -67,7 +91,7 @@
         (click)="send()">Send</button>
     </ion-item>
     <ion-item text-center *ngIf="!checkQRcode" no-margin>
-      <button style="margin-top: 0 !important;" class="normal-button" ion-button color="primary" (click)="cancel()">Cancel</button>
+      <button style="margin-top: 0 !important;" class="normal-button" ion-button color="nexty" (click)="cancel()">Cancel</button>
     </ion-item>
   </ion-list>
 </ion-content>

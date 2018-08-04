@@ -39,8 +39,8 @@ export class AuthService {
         ]).map(data => {
           this.privateKey = data[0];
           this.cachePwd = data[1];
-          let priv = this.getPrivateKey('123455')
-          console.log('priv:' + priv)
+          // let priv = this.getPrivateKey('123455')
+          // console.log('priv:' + priv)
         });
       } else {
         return Observable.of(0);
@@ -49,7 +49,7 @@ export class AuthService {
   }
 
   login(address: string, password: string): Observable<any> {
-    console.log(this.getPrivateKey(password))
+    //console.log(this.getPrivateKey(password))
     // encrypt password
     password = AuthService.encryptPassword(password);
 

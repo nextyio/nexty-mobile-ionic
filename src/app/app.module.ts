@@ -51,6 +51,8 @@ import { Firebase } from '@ionic-native/firebase';
 import { DetailNotiPage } from '../pages/detail-noti/detail-noti';
 import { NotificationsPage } from '../pages/notifications/notifications';
 import { PrivateKeyPage } from '../pages/private-key/private-key';
+import { SmartContractPage } from '../pages/smart-contract/smart-contract';
+import { PopoverComponent } from '../components/popover/popover';
 
 @NgModule({
   declarations: [
@@ -72,7 +74,9 @@ import { PrivateKeyPage } from '../pages/private-key/private-key';
     RedeemPage,
     NotificationsPage,
     DetailNotiPage,
-    PrivateKeyPage
+    PrivateKeyPage,
+    SmartContractPage,
+    PopoverComponent
   ],
   imports: [
     BrowserModule,
@@ -106,7 +110,9 @@ import { PrivateKeyPage } from '../pages/private-key/private-key';
     RedeemPage,
     NotificationsPage,
     DetailNotiPage,
-    PrivateKeyPage
+    PrivateKeyPage,
+    SmartContractPage,
+    PopoverComponent
   ],
   providers: [
     StatusBar,

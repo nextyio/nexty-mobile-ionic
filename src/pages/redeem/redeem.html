@@ -6,7 +6,7 @@
 -->
 <ion-header>
 
-  <ion-navbar color="primary">
+  <ion-navbar color="nexty">
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
@@ -23,25 +23,25 @@
       <div class="text-bold">Info QR code</div>
       <ion-label text-left margin>QR code: {{QRcode}}</ion-label>
       <div text-left margin>NTY: {{amount}}</div>
-      <button ion-button color="secondary" [disabled]="error" (click)="redeem()">Redeem</button>
+      <button ion-button color="secondary" [disabled]="error" (click)="redeem()" style="padding: 0 30%">Redeem</button>
     </div>
 
     <div class="formSuccess" *ngIf="statusQR">
       <div class="text-bold" text-center>Congratulation!</div>
       <div class="text-content" text-center>You have received {{amount}} NTY!</div>
       <!-- <div class="goDashboard" (click)="goDashboard()">Go to dashboard</div> -->
-      <button ion-button color="secondary" (click)="goDashboard()">Ok</button>
+      <button ion-button color="secondary" (click)="goDashboard()" style="padding: 0 30%">Ok</button>
     </div>
 
     <div class="formSuccess" *ngIf="error">
       <div class="text-bold">Error!</div>
       <div class="text-content" *ngIf="used" text-center>Sorry, this QRCode has been used</div>
-      <div class="text-content" *ngIf="expired" text-center>Sorry, this QRCode have been expired</div>
+      <div class="text-content" *ngIf="expired" text-center>Sorry, this QRCode has been expired</div>
       <div text-center *ngIf="notExist">Sorry, this QRCode does not exist</div>
       <!-- <div class="goDashboard" (click)="goDashboard()">Go to dashboard</div>
       <div class="or"> Or </div> -->
       <!-- <div class="reload" (click)="scanQR()">Rescan</div> -->
-      <button ion-button color="secondary" (click)="scanQR()">Rescan</button>
+      <button ion-button color="secondary" (click)="scanQR()" style="padding: 0 30%">Rescan</button>
     </div>
 
   </div>

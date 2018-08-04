@@ -113,26 +113,29 @@ export class BackupPage {
         if (this.platform.is('android')) {
           // console.log("content: " + JSON.stringify(dataFile));
           this.file.writeFile(this.file.externalDataDirectory, name, this.service.code + '').then(res => {
-            this.loadingService.showToat('save file: ' + res.nativeURL);
+            // this.loadingService.showToat('save file: ' + res.nativeURL);
             console.log(JSON.stringify(res));
             this.urlFile = res.nativeURL;
-            // var newPath = this.urlFile.substr(0, this.urlFile.lastIndexOf('/And') + 1);
-            // this.file.checkDir(newPath, 'BackupNexty').then(exists => {
-            //   if (!exists) {
-            //     this.file.createDir(newPath, "BackupNexty", false).then(path => {
-            //       console.log("path:", path, JSON.stringify(path))
-            //       this.file.writeFile(path.nativeURL, name, this.code + '').then(resfile => {
-            //         console.log(JSON.stringify(resfile));
-            //       })
-            //       var pathOld = this.urlFile.substr(0, this.urlFile.lastIndexOf('/') + 1)
-            //     })
-            //   } else {
 
-            //     this.file.writeFile(newPath + 'BackupNexty/', name, this.code + '').then(resfile => {
-            //       console.log(JSON.stringify(resfile));
-            //     })
-            //   }
-            // })
+            var newPath = this.urlFile.substr(0, this.urlFile.lastIndexOf('/And') + 1);
+            this.file.checkDir(newPath, 'BackupNexty').then(exists => {
+              if (!exists) {
+                this.file.createDir(newPath, "BackupNexty", false).then(path => {
+                  console.log("path:", path, JSON.stringify(path))
+                  this.file.writeFile(path.nativeURL, name, this.code + '').then(resfile => {
+                    this.loadingService.showToat('save file: ' + resfile.nativeURL);
+                    //console.log(JSON.stringify(resfile));
+                  })
+                  var pathOld = this.urlFile.substr(0, this.urlFile.lastIndexOf('/') + 1)
+                })
+              } else {
+
+                this.file.writeFile(newPath + 'BackupNexty/', name, this.code + '').then(resfile => {
+                  // console.log(JSON.stringify(resfile));
+                  this.loadingService.showToat('save file: ' + resfile.nativeURL);
+                })
+              }
+            })
 
           }).catch(err => {
             console.log(err);

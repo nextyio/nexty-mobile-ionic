@@ -3,11 +3,10 @@ import { Storage } from '@ionic/storage';
 import { Observable } from "rxjs/Observable";
 import "rxjs/add/observable/fromPromise";
 import "rxjs/add/observable/forkJoin";
-import { File } from '@ionic-native/file';
 
 @Injectable()
 export class DataService {
-  constructor(private storage: Storage, private file: File) {
+  constructor(private storage: Storage, ) {
   }
 
   setCurrent(address: string): Observable<void> {
@@ -60,6 +59,17 @@ export class DataService {
       return value;
     })
   }
+  setToken(token: any): Observable<any> {
+    return Observable.fromPromise(this.storage.set('listToken', token).then(value => {
+      return value;
+    }))
+  }
+
+  getToken(): Observable<any> {
+    return Observable.fromPromise(this.storage.get('listToken')).map(value => {
+      return value;
+    })
+  }
 
   getvalue(name: string): Observable<any> {
     return Observable.fromPromise(this.storage.get(name)).map(value => {
@@ -68,16 +78,10 @@ export class DataService {
   }
 
   clearBackup() {
-    return Observable.fromPromise(this.storage.remove('keystore'));
+    return Observable.forkJoin(
+      this.storage.remove('listToken'),
+      this.storage.remove('keystore')
+    );
   }
 
-  writeFileLocal(content): Observable<any> {
-    var dateTime = new Date();
-    let name = 'backup-' + dateTime.getDate() + dateTime.getTime() + '.txt';
-    return Observable.fromPromise(this.file.writeFile(this.file.externalDataDirectory, name, content).then(res => {
-      console.log("write file success: " + JSON.stringify(res));
-    }).catch(err => {
-      console.log("Error", err);
-    }))
-  }
 }

@@ -35,24 +35,4 @@ export class DashboardService extends CommonService {
       this.walletService.updateBalance()
     );
   }
-
-  getRateHistoryData(): Observable<any> {
-    return this.http.get(Constants.SERVICE_API + '/api/getExchangerate')
-      .map((res) => {
-        if (res instanceof Array && res.length > 0) {
-          this.rateHistory = [];
-          for (let entry of res) {
-            let date = entry['dateTime'];
-            let price = Utils.round(entry['price'], 2);
-
-            this.rateHistory.push({
-              date: date,
-              price: price
-            })
-          }
-
-          this.rateHistory = this.rateHistory.reverse();
-        }
-      });
-  }
 }

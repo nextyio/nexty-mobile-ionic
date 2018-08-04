@@ -14,7 +14,7 @@
 // automatically applied to the <body> element in the app.
 ion-menu {
     ion-content.content {
-        background-color: map-get($colors, 'primary');
+        background-color: map-get($colors, 'nexty');
         .menu-content {
             button.item {
                 color: #FFF;
@@ -52,7 +52,7 @@ ion-menu {
         text-align: center;
         font-size: 24px;
         font-family: Poppins;
-        color: #0d47a1;
+        color: map-get($colors, 'nexty');
     }
 }
 
@@ -86,9 +86,13 @@ ion-menu {
 }
 
 .slim-loading-bar {
-    background-color: #0d47a1;
+    background-color: map-get($colors, 'nexty');
 }
 
 ul {
     list-style-type: none;
+}
+
+.split-pane-side {
+    border-right: 0px !important;
 }

@@ -47,6 +47,7 @@
     "cordova-clipboard": "^1.2.1",
     "cordova-custom-config": "^5.0.2",
     "cordova-ios": "4.5.4",
+    "cordova-osx": "4.0.1",
     "cordova-plugin-crosswalk-webview": "^2.4.0",
     "cordova-plugin-device": "^2.0.2",
     "cordova-plugin-file": "^6.0.1",
@@ -67,6 +68,7 @@
     "cordova-windows": "5.0.0",
     "crypto-js": "^3.1.9-1",
     "es6-promise-plugin": "^4.2.2",
+    "ethereumjs-tx": "^1.3.6",
     "ionic-angular": "3.9.2",
     "ionic2-super-tabs": "^4.2.2",
     "ionicons": "3.0.0",
@@ -79,8 +81,9 @@
     "prune": "0.0.2",
     "rxjs": "5.5.2",
     "sw-toolbox": "3.6.0",
+    "truffle-contract": "^3.0.6",
     "ts-md5": "^1.2.4",
-    "web3": "^1.0.0-beta.30",
+    "web3": "^1.0.0-beta.34",
     "zone.js": "0.8.18"
   },
   "devDependencies": {
@@ -100,7 +103,6 @@
       },
       "cordova-plugin-x-socialsharing": {},
       "cordova-sqlite-storage": {},
-      "cordova-plugin-statusbar": {},
       "cordova-plugin-inappbrowser": {},
       "cordova-plugin-file": {},
       "cordova-clipboard": {},
@@ -120,13 +122,15 @@
       "cordova-plugin-filepicker": {},
       "cordova-plugin-filepath": {},
       "cordova-plugin-network-information": {},
-      "cordova-plugin-firebase": {}
+      "cordova-plugin-firebase": {},
+      "cordova-plugin-statusbar": {}
     },
     "platforms": [
       "browser",
       "ios",
       "windows",
-      "android"
+      "android",
+      "osx"
     ]
   }
 }

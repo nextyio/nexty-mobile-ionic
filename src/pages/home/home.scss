@@ -1,105 +1,86 @@
 // Ionic Super Tabs iOS + iPhone X Fix
 .ios .ion-page,
-.ios .modal-wrapper > .ion-page {
-  ion-header.header-ios > ion-navbar.toolbar-ios.statusbar-padding {
-    padding-top: calc(4px + 20px);
-    padding-top: calc(4px + env(safe-area-inset-top));
-    padding-left: env(safe-area-inset-left);
-    padding-right: env(safe-area-inset-right);
-    min-height: calc(44px + 20px);
-    min-height: calc(44px + env(safe-area-inset-top));
-
-    ion-title {
-      padding-top: calc(4px + 20px);
-      padding-top: calc(4px + env(safe-area-inset-top));
-      height: calc(44px + 20px);
-      height: calc(44px + env(safe-area-inset-top));
-      min-height: calc(44px + 20px);
-      min-height: calc(44px + env(safe-area-inset-top));
+.ios .modal-wrapper>.ion-page {
+    ion-header.header-ios>ion-navbar.toolbar-ios.statusbar-padding {
+        padding-top: calc(4px + 20px);
+        padding-top: calc(4px + env(safe-area-inset-top));
+        padding-left: env(safe-area-inset-left);
+        padding-right: env(safe-area-inset-right);
+        min-height: calc(44px + 20px);
+        min-height: calc(44px + env(safe-area-inset-top));
+        ion-title {
+            padding-top: calc(4px + 20px);
+            padding-top: calc(4px + env(safe-area-inset-top));
+            height: calc(44px + 20px);
+            height: calc(44px + env(safe-area-inset-top));
+            min-height: calc(44px + 20px);
+            min-height: calc(44px + env(safe-area-inset-top));
+        }
     }
-  }
-
-  super-tabs.tabs-placement-bottom super-tabs-toolbar ion-toolbar.toolbar {
-    padding-bottom: env(safe-area-inset-bottom);
-  }
+    super-tabs.tabs-placement-bottom super-tabs-toolbar ion-toolbar.toolbar {
+        padding-bottom: env(safe-area-inset-bottom);
+    }
 }
 
 page-home {
-
-  ion-content.content {
-    background-color: #F5FCFF;
-  }
-
-  ion-item.item {
-    background-color: transparent;
-  }
-
-  super-tabs {
-
-    /* tabs */
-    super-tabs-toolbar {
-      > ion-toolbar.toolbar {
-        div.toolbar-background {
-          background-color: map-get($colors, 'primary');
-        }
-        div.toolbar-content {
-
-          .tab-buttons {
-            super-tab-button {
-              color: #b8cbde;
-              font-weight: normal !important;
-
-              &.selected {
-                color: #ffffff;
-                border-bottom: 2px solid yellow;
-              }
-
-              &.title-and-icon {
-                padding-top: 5px;
-                height: 60px;
-
-                ion-icon {
-                  margin-bottom: 5px !important;
+    ion-content.content {
+        background-color: #F5FCFF;
+    }
+    ion-item.item {
+        background-color: transparent;
+    }
+    super-tabs {
+        /* tabs */
+        super-tabs-toolbar {
+            >ion-toolbar.toolbar {
+                div.toolbar-background {
+                    background-color: map-get($colors, 'nexty');
                 }
-              }
-
-              /* effect */
-              &:before {
-                content: "";
-
-                position: absolute;
-                top: 50%;
-                left: 50%;
-
-                display: block;
-                width: 0;
-                padding-top: 0;
-
-                border-radius: 100%;
-
-                background-color: rgba(236, 240, 241, .3);
-
-                -webkit-transform: translate(-50%, -50%);
-                -moz-transform: translate(-50%, -50%);
-                -ms-transform: translate(-50%, -50%);
-                -o-transform: translate(-50%, -50%);
-                transform: translate(-50%, -50%);
-              }
-
-              &:active:before {
-                width: 120%;
-                padding-top: 120%;
-
-                transition: width .3s ease-out, padding-top .3s ease-out;
-              }
+                div.toolbar-content {
+                    .tab-buttons {
+                        super-tab-button {
+                            color: #b8cbde;
+                            font-weight: normal !important;
+                            &.selected {
+                                color: #ffffff;
+                                border-bottom: 2px solid yellow;
+                            }
+                            &.title-and-icon {
+                                padding-top: 5px;
+                                height: 60px;
+                                ion-icon {
+                                    margin-bottom: 5px !important;
+                                }
+                            }
+                            /* effect */
+                            &:before {
+                                content: "";
+                                position: absolute;
+                                top: 50%;
+                                left: 50%;
+                                display: block;
+                                width: 0;
+                                padding-top: 0;
+                                border-radius: 100%;
+                                background-color: rgba(236, 240, 241, .3);
+                                -webkit-transform: translate(-50%, -50%);
+                                -moz-transform: translate(-50%, -50%);
+                                -ms-transform: translate(-50%, -50%);
+                                -o-transform: translate(-50%, -50%);
+                                transform: translate(-50%, -50%);
+                            }
+                            &:active:before {
+                                width: 120%;
+                                padding-top: 120%;
+                                transition: width .3s ease-out, padding-top .3s ease-out;
+                            }
+                        }
+                    }
+                }
             }
-          }
         }
-      }
+        super-tabs-container {
+            height: calc(100% - 60px) !important;
+        }
     }
-
-    super-tabs-container {
-      height: calc(100% - 60px) !important;
-    }
-  }
 }
