@@ -3,8 +3,12 @@ export class Constants {
 
   /* static */
   static readonly SERVICE_API = 'https://app.nexty.io';
-  static readonly WEB3_API = 'http://125.212.250.61:11111';
-  // static readonly WEB3_API = 'http://13.228.68.50:8545';
+
+  /* Test net*/
+  // static readonly WEB3_API = 'http://125.212.250.61:11111';
+
+  /* Main net */
+  static readonly WEB3_API = 'http://13.228.68.50:8545';
   static readonly EXPLORER_API = 'https://explorer.nexty.io';
   static readonly WALLET_API = 'https://dev-wallet.nexty.io';
   static readonly BASE_PNTY = Math.pow(10, 22);

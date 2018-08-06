@@ -354,6 +354,13 @@ export class SendPage {
       }
     }, (err) => {
       console.log('Error: ', err);
+      let alert = this.alertCtrl.create({
+        title: 'Error',
+        subTitle: err,
+        buttons: ['OK']
+      }
+      );
+      alert.present();
     });
   }
   presentPopover(myEvent) {

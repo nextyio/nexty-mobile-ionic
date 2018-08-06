@@ -173,6 +173,16 @@ export class MyApp {
         }
 
       }
+    }).catch(error => {
+      console.log("Error scanQR: " + error)
+      this.loadingservice.hide();
+      let alert = this.alertCtrl.create({
+        title: 'Error',
+        subTitle: error,
+        buttons: ['OK']
+      }
+      );
+      alert.present();
     })
   }
 
