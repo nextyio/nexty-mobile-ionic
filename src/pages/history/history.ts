@@ -52,8 +52,6 @@ export class HistoryPage {
     // if the value is an empty string don't filter the items
     if (val && val.trim() != '') {
       this.transactions = this.transactions.filter((transaction) => {
-        console.log("transaction: " + JSON.stringify(transaction))
-        console.log("aaa: " + (transaction.quantity.toLowerCase().indexOf(val.toLowerCase()) > -1))
         return (transaction.quantity.toLowerCase().indexOf(val.toLowerCase()) > -1);
       })
     } else {

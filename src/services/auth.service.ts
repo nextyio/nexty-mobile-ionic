@@ -8,6 +8,13 @@ import "rxjs/add/operator/mergeMap";
 import "rxjs/add/operator/map";
 import "rxjs/add/observable/forkJoin";
 import { Storage } from '@ionic/storage';
+import { SocialSharing } from '@ionic-native/social-sharing';
+import { FilePath } from '@ionic-native/file-path';
+import { File } from '@ionic-native/file';
+import moment from 'moment';
+import { Platform } from "ionic-angular";
+import { LoadingService } from "./loading.service";
+
 
 @Injectable()
 export class AuthService {
@@ -17,10 +24,17 @@ export class AuthService {
   privateKey: string;
   cachePwd: string;
   public keystore;
-
+  public urlFile: string;
+  public namefile: string;
   constructor(
     private dataService: DataService,
     private storage: Storage,
+    private socialSharing: SocialSharing,
+    private filePath: FilePath,
+    public platform: Platform,
+    private file: File,
+    private loadingService: LoadingService,
+
   ) {
   }
 
@@ -79,8 +93,61 @@ export class AuthService {
   register(password: string): Observable<any> {
     // generate address
     let key = keythereum.create();
+    var options = {
+      kdf: "pbkdf2",
+      cipher: "aes-128-ctr",
+      kdfparams: {
+        c: 262144,
+        dklen: 32,
+        prf: "hmac-sha256"
+      }
+    };
+    keythereum.dump(password, key['privateKey'], key['salt'], key['iv'], options, (keyObject) => {
+      console.log('aaaa', keyObject);
+      // create name keystore
+      var dateTime = new Date();
+      let name = 'keystore--' + moment().format('YYYY-MM-DD') + '-' + dateTime.getTime() + '--' + this.address + '.json';
+      // save file keystore 
+      // var dataFile = { "code-nexty": this.service.code }
+      if (this.platform.is('android')) {
+        // console.log("content: " + JSON.stringify(dataFile));
+        this.file.writeFile(this.file.externalDataDirectory, name, JSON.stringify(keyObject) + '').then(res => {
+          this.urlFile = res.nativeURL;
+          var newPath = this.urlFile.substr(0, this.urlFile.lastIndexOf('/And') + 1);
+          this.file.checkDir(newPath, 'BackupNexty').then(exists => {
+            if (!exists) {
+              this.file.createDir(newPath, "BackupNexty", false).then(path => {
+                console.log("path:", path, JSON.stringify(path))
+                this.file.writeFile(path.nativeURL, name, JSON.stringify(keyObject) + '').then(resfile => {
+                  this.loadingService.showToat('save file: ' + resfile.nativeURL);
+                })
+                var pathOld = this.urlFile.substr(0, this.urlFile.lastIndexOf('/') + 1)
+              })
+            } else {
 
-    // let keyOject = keythereum.dump(password, key['privateKey'], key['salt'], key['iv']);
+              this.file.writeFile(newPath + 'BackupNexty/', name, JSON.stringify(keyObject) + '').then(resfile => {
+                this.loadingService.showToat('save file: ' + resfile.nativeURL);
+              })
+            }
+          })
+
+        }).catch(err => {
+          console.log(err);
+        })
+      } else if (this.platform.is('ios')) {
+        this.file.writeFile(this.file.tempDirectory, name, JSON.stringify(keyObject) + '')
+          .then(res => {
+            console.log("write file success: " + JSON.stringify(res));
+            this.urlFile = res.nativeURL;
+            this.socialSharing.share(null, null, res.nativeURL).then(value => {
+              console.log(value);
+            })
+          }).catch(err => {
+            console.log("Error", JSON.stringify(err));
+          })
+      }
+
+    });
 
     // this.storage.set('key', keyOject);
     let privateKeyBuffer = key['privateKey'];

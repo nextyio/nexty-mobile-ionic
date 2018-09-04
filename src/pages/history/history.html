@@ -21,7 +21,7 @@
   <ion-list>
     <ion-item *ngFor="let transaction of transactions" tappable (click)="goDetail(transaction)">
       <ion-icon item-start name="arrow-round-{{transaction.type}}" [color]="transaction.type == 'up' ? 'danger' : 'positive'"></ion-icon>
-      <h3>{{ transaction.amount }}</h3>
+      <h3>{{ transaction.quantity }}</h3>
       <h4>{{ transaction.datetime }}</h4>
       <ion-icon item-end name="ios-arrow-forward"></ion-icon>
     </ion-item>

@@ -16,15 +16,17 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content padding-top>
   <ion-list no-lines *ngIf="!getPK()">
     <ion-item>
       <p text-center>Click below button to get private key</p>
     </ion-item>
-    <ion-item no-lines text-center no-padding>
+    <ion-item no-lines text-center>
       <button class="normal-button" ion-button color="secondary" (click)="getPrivateKey()">Get private key</button>
     </ion-item>
   </ion-list>
+
+
   <ion-list no-lines *ngIf="getPK()">
     <ion-item>
       <p text-center>Private key</p>
@@ -32,9 +34,10 @@
     <ion-item text-center>
       <ion-label text-center>{{PrivateKey}}</ion-label>
     </ion-item>
-    <ion-item no-lines text-center no-padding>
+    <ion-item no-lines text-center>
       <button class="normal-button" ion-button color="secondary" *ngIf="!copied" (click)="copy()">Copy private key</button>
       <button class="normal-button" ion-button color="secondary" *ngIf="copied">Copied</button>
     </ion-item>
   </ion-list>
+
 </ion-content>

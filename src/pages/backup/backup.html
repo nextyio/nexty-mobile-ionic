@@ -16,13 +16,13 @@
 </ion-header>
 
 
-<ion-content no-bounce padding>
+<ion-content no-bounce padding-top>
   <div class="backup">
     <ion-list no-lines *ngIf="!backedUp()">
       <ion-item>
         <p text-center>Click below button to backup wallet</p>
       </ion-item>
-      <ion-item no-lines text-center no-padding>
+      <ion-item no-lines text-center>
         <button class="normal-button" ion-button color="secondary" (click)="backup()">Backup</button>
       </ion-item>
     </ion-list>
@@ -33,11 +33,11 @@
       <ion-item text-center>
         <ion-label>{{ code }}</ion-label>
       </ion-item>
-      <ion-item no-lines text-center no-padding>
+      <ion-item no-lines text-center>
         <button class="normal-button" ion-button color="secondary" *ngIf="!copied" (click)="copy()">Copy code</button>
         <button class="normal-button" ion-button color="secondary" *ngIf="copied">Copied</button>
       </ion-item>
-      <ion-item no-lines text-center no-padding>
+      <ion-item no-lines text-center>
         <button class="normal-button" ion-button (click)="shareFile()">Save or share file backup</button>
       </ion-item>
       <!-- <ion-item no-lines text-center>

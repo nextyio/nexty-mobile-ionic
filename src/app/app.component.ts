@@ -143,7 +143,7 @@ export class MyApp {
   }
 
   goHome() {
-    this.nav.setRoot(HomePage);
+    this.nav.setRoot(UnloginPage);
     this.activePage = 1;
   }
 

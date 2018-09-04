@@ -265,7 +265,7 @@ export class DashboardPage implements OnDestroy {
 
   get lastRatePrefix(): string {
     // return Utils.round(this.rateService.rate / Constants.PNTY_NTY, 8).toString().substr(0, 6);
-    return (this.rateService.rate).toFixed(6)
+    return (this.rateService.rate).toFixed(6);
   }
 
   get lastRateSuffix(): string {

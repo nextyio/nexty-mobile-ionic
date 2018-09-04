@@ -5,7 +5,7 @@ export class Constants {
   static readonly SERVICE_API = 'https://app.nexty.io';
 
   /* Test net*/
-  // static readonly WEB3_API = 'http://125.212.250.61:11111';
+  static readonly WEB3_API_TESTNET = 'http://125.212.250.61:11111';
 
   /* Main net */
   static readonly WEB3_API = 'http://13.228.68.50:8545';
