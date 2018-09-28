@@ -19,6 +19,8 @@ import { BarcodeScanner, BarcodeScanResult } from '@ionic-native/barcode-scanner
 import { PrivateKeyPage } from '../pages/private-key/private-key';
 import { SmartContractPage } from '../pages/smart-contract/smart-contract';
 import { HistoryPage } from '../pages/history/history';
+import { Deeplinks } from '@ionic-native/deeplinks';
+
 
 @Component({
   templateUrl: 'app.html'
@@ -45,13 +47,14 @@ export class MyApp {
     private fcm: FcmService,
     private toastCtrl: ToastController,
     private barcodeScanner: BarcodeScanner,
-
+    private deeplink: Deeplinks
   ) {
     this.initializeApp();
   }
 
   initializeApp() {
     this.platform.ready().then(() => {
+      this.checkDeepLink();
       console.log("platform ready..")
       this.splashScreen.hide();
       if (this.platform.is('android')) {
@@ -95,6 +98,25 @@ export class MyApp {
       this.fcm.getToken().then(token => {
         console.log("token device: " + token);
       })
+    });
+  }
+
+
+  checkDeepLink() {
+    this.deeplink.routeWithNavController(this.nav, {
+
+    }).subscribe((match) => {
+      console.log('Successfully routed', match.$link.url);
+      var CutStr = match.$link.url;
+      if (CutStr.indexOf('user_id') > -1 && CutStr.indexOf('amount') > -1 && CutStr.indexOf('address') > -1 && CutStr.indexOf('app_name') > -1) {
+        this.loadingservice.DataDeepLink = match.$link.url;
+        // this.dataservice.setDeepLink(JSON.stringify(match))
+        if (this.platform.is("ios") && this.loadingservice.logined) {
+          this.goHome();
+        }
+      }
+    }, (nomatch) => {
+      console.log('Unmatched Route', nomatch);
     });
   }
 
@@ -143,7 +165,7 @@ export class MyApp {
   }
 
   goHome() {
-    this.nav.setRoot(UnloginPage);
+    this.nav.setRoot(HomePage);
     this.activePage = 1;
   }
 

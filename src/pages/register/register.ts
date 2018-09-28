@@ -75,6 +75,6 @@ export class RegisterPage {
   }
 
   viewToS() {
-    this.iab.create('https://nexty.io/privacy-policy.html', '_system');
+    this.iab.create('https://nexty.io/privacy-policy/', '_system');
   }
 }

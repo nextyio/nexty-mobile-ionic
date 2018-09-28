@@ -8,6 +8,7 @@ import { LoadingService } from "../../services/loading.service";
 import bigInt from "big-integer";
 import { PopoverComponent } from '../../components/popover/popover';
 import { FcmService } from '../../services/fcm.service';
+import { DataService } from '../../services/data.service';
 @Component({
   selector: 'page-send',
   templateUrl: 'send.html',
@@ -41,6 +42,7 @@ export class SendPage {
     private walletService: WalletService,
     public popoverCtrl: PopoverController,
     private fcm: FcmService,
+    private dataservice: DataService
   ) {
     this.isFocusedAddress = false;
     this.isFocusedPNTY = false;
@@ -57,12 +59,41 @@ export class SendPage {
       this.activeAddToken = false;
     }
   }
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad screen Send');
+    if (this.loadingService.DataDeepLink != null || this.loadingService.DataDeepLink != '' || this.loadingService.DataDeepLink.length > 0) {
+      // this.loadingService.show();
+      var tempArr = []
+      var CutStr = this.loadingService.DataDeepLink.substr(this.loadingService.DataDeepLink.lastIndexOf('://') + 3, (this.loadingService.DataDeepLink.length) - 1);
+      var splStr = CutStr.split('&');
+      splStr.forEach(element => {
+        tempArr.push(element.split("="))
+      });
+      setTimeout(() => {
+        // this.loadingService.hide();
+        this.toAddress = tempArr[2][1];
+        this.nty = tempArr[1][1];
+        var tempExtraData = '{"' + tempArr[0][0] + '":"' + tempArr[0][1] + '","' + tempArr[3][0] + '":"' + tempArr[3][1] + '"}';
+        var hexExtraData = '';
+        console.log('hexExtra: ' + hexExtraData)
 
+        for (let i = 0; i < tempExtraData.length; i++) {
+          hexExtraData += '' + tempExtraData.charCodeAt(i).toString(16);
+        }
+        this.ExtraData = '0x' + hexExtraData
+        console.log('hex extra data: ' + this.ExtraData)
+        this.focusPNTY();
+        this.checkQRcode = false;
+        this.extraDataView = tempExtraData;
+        this.isFocusedAddress = true;
+      }, 1000)
+    }
+  }
 
   ionViewDidEnter() {
-    console.log("SendPage")
-
+    console.log("SendPage");
   }
+
   focusAddress() {
     this.isFocusedAddress = true;
   }

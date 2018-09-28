@@ -8,6 +8,9 @@ import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 export class LoadingService {
   loading: any;
   toastNet: any;
+
+  public DataDeepLink: string = '';
+  public logined: boolean = false;
   constructor(
     private loadingCtrl: LoadingController,
     private toastCtrl: ToastController,

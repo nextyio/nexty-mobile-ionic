@@ -5,6 +5,7 @@ import { ChartsModule } from 'ng2-charts';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { AlertController } from 'ionic-angular';
 import { Clipboard } from '@ionic-native/clipboard';
+import { Deeplinks } from '@ionic-native/deeplinks';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -133,6 +134,7 @@ import { PopoverComponent } from '../components/popover/popover';
     FcmService,
 
     /* Other providers*/
+    Deeplinks,
     BarcodeScanner,
     SocialSharing,
     InAppBrowser,

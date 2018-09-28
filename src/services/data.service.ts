@@ -76,6 +76,14 @@ export class DataService {
       return value;
     })
   }
+  setDeepLink(data): Observable<string> {
+    return Observable.fromPromise(this.storage.set('dataDeeplink', data))
+  }
+  getDeepLink(): Observable<any> {
+    return Observable.fromPromise(this.storage.get('dataDeeplink')).map(value => {
+      return value;
+    })
+  }
 
   clearBackup() {
     return Observable.forkJoin(
